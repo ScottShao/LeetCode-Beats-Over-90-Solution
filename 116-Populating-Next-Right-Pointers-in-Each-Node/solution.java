@@ -11,18 +11,21 @@ public class Solution {
         if (root == null) {
             return;
         }
-        TreeLinkNode dummy = new TreeLinkNode(-1);
-        TreeLinkNode prev = dummy;
-        while (root != null && root.left != null) {
-            prev.next = root.left;
-            root.left.next = root.right;
-            prev = root.right;
-            if (root.next == null) {
-                root = dummy.next;
-                prev = dummy;
-            } else {
-                root = root.next;
+        TreeLinkNode start = root;
+        while (start != null) {
+            TreeLinkNode crt = start;
+            while (crt != null) {
+                if (crt.left != null) { 
+                    crt.left.next = crt.right;
+                    if (crt.next != null)  {
+                        crt.right.next = crt.next.left;
+                    } else {
+                        break;
+                    }
+                }
+                crt = crt.next;
             }
+            start = start.left;
         }
     }
 }
