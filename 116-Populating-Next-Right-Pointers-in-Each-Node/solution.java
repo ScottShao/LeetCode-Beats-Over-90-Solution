@@ -13,8 +13,7 @@ public class Solution {
             for (TreeLinkNode cur = root; cur != null; cur = cur.next) {
                 if (cur.left == null) break;
                 cur.left.next = cur.right;
-                if (cur.next != null)
-                cur.right.next = cur.next.left;
+                if (cur.next != null) cur.right.next = cur.next.left;
             }
             root = root.left;
         }
