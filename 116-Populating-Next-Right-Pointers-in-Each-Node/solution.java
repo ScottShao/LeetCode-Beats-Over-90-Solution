@@ -22,6 +22,8 @@ public class Solution {
                     } else {
                         break;
                     }
+                } else {
+                    break;
                 }
                 crt = crt.next;
             }
