@@ -11,18 +11,17 @@ public class Solution {
         if (root == null) {
             return;
         }
-        TreeLinkNode crt = root;
         TreeLinkNode dummy = new TreeLinkNode(-1);
         TreeLinkNode prev = dummy;
-        while (crt != null && crt.left != null) {
-            prev.next = crt.left;
-            crt.left.next = crt.right;
-            prev = crt.right;
-            if (crt.next == null) {
-                crt = dummy.next;
+        while (root != null && root.left != null) {
+            prev.next = root.left;
+            root.left.next = root.right;
+            prev = root.right;
+            if (root.next == null) {
+                root = dummy.next;
                 prev = dummy;
             } else {
-                crt = crt.next;
+                root = root.next;
             }
         }
     }
