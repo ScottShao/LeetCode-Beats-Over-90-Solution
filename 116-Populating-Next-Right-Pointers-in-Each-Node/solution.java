@@ -8,23 +8,15 @@
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        TreeLinkNode start = root;
-        while (start != null) {
-            TreeLinkNode crt = start;
-            while (crt != null) {
-                if (crt.left != null) { 
-                    crt.left.next = crt.right;
-                    if (crt.next != null)  {
-                        crt.right.next = crt.next.left;
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
-                }
-                crt = crt.next;
+        if (root == null) return;
+        while (root.left != null) {
+            for (TreeLinkNode cur = root; cur != null; cur = cur.next) {
+                if (cur.left == null) break;
+                cur.left.next = cur.right;
+                if (cur.next == null) break;
+                cur.right.next = cur.next.left;
             }
-            start = start.left;
+            root = root.left;
         }
     }
 }
