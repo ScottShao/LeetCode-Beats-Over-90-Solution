@@ -8,9 +8,6 @@
  */
 public class Solution {
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) {
-            return true;
-        }
         ListNode fast = head;
         ListNode slow = head;
         while (fast != null && fast.next != null) {
@@ -31,13 +28,10 @@ public class Solution {
             crt = temp;
         }
         
-        while (prev != null) {
-            if (prev.val != head.val) {
-                return false;
-            }
+        while (prev != null && prev.val == head.val) {
             prev = prev.next;
             head = head.next;
         }
-        return true;
+        return prev == null;
     }
 }
