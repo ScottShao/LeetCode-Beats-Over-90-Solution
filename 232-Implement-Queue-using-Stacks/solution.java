@@ -3,22 +3,24 @@ class MyQueue {
     Stack<Integer> output = new Stack();
 
     public void push(int x) {
+        while (!output.isEmpty()) {
+            input.push(output.pop());
+        }
         input.push(x);
+        while (!input.isEmpty()) {
+            output.push(input.pop());
+        }
     }
 
     public void pop() {
-        peek();
         output.pop();
     }
 
     public int peek() {
-        if (output.empty())
-            while (!input.empty())
-                output.push(input.pop());
         return output.peek();
     }
 
     public boolean empty() {
-        return input.empty() && output.empty();
+        return output.empty();
     }
 }
