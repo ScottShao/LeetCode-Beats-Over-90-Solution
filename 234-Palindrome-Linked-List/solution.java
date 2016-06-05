@@ -7,17 +7,30 @@
  * }
  */
 public class Solution {
-    ListNode h;
     public boolean isPalindrome(ListNode head) {
-        if (head == null) return true;
-
-        if (h == null) h = head;
-
-        boolean tmp = true;        
-        if (head.next != null) tmp &= isPalindrome(head.next);
-
-        tmp &= (head.val == h.val);
-        h = h.next;
-        return tmp;
+        int len = 0;
+        ListNode p = head, tmp, newHead = null;
+        while (p != null) {
+            p = p.next;
+            ++len;
+        }
+        p = head;
+        int halfLen = len >>> 1;
+        for (int i = 0; i < halfLen; ++i) {
+            tmp = p.next;
+            p.next = newHead;
+            newHead = p;
+            p = tmp;
+        }
+        if (len % 2 == 1) {
+            p = p.next;
+        }
+        for (int i = 0; i < halfLen; ++i) {
+            if (newHead.val != p.val)
+                return false;
+            newHead = newHead.next;
+            p = p.next;
+        }
+        return true;
     }
 }
