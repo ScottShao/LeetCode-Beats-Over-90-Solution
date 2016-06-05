@@ -20,12 +20,11 @@ public class Solution {
         }
         
         ListNode prev = null;
-        ListNode crt = slow;
-        while (crt != null) {
-            ListNode temp = crt.next;
-            crt.next = prev;
-            prev = crt;
-            crt = temp;
+        while (slow != null) {
+            ListNode temp = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = temp;
         }
         
         while (prev != null && prev.val == head.val) {
