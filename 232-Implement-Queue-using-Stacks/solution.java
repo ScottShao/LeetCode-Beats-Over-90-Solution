@@ -1,34 +1,26 @@
 class MyQueue {
-    Stack<Integer> stack1 = new Stack<Integer>();
+    Stack<Integer> input = new Stack();
+    Stack<Integer> output = new Stack();
 
-    // Push element x to the back of queue.
     public void push(int x) {
-        Stack<Integer> tempStack = new Stack<Integer>();
-        if(stack1.empty()) stack1.push(x);
-        else{
-            // when poping out elements to the temporary stack, the order of the element would be reversed which make up the requirement of queue
-            while(!stack1.empty()){
-                tempStack.push(stack1.pop());
-            }
-            stack1.push(x);
-            while(!tempStack.empty()){
-                stack1.push(tempStack.pop());
-            }
+        while (!output.isEmpty()) {
+            input.push(output.pop());
+        }
+        input.push(x);
+        while (!input.isEmpty()) {
+            output.push(input.pop());
         }
     }
 
-    // Removes the element from in front of queue.
     public void pop() {
-        stack1.pop();
+        output.pop();
     }
 
-    // Get the front element.
     public int peek() {
-        return stack1.peek();
+        return output.peek();
     }
 
-    // Return whether the queue is empty.
     public boolean empty() {
-        return stack1.empty();
+        return output.empty();
     }
 }
