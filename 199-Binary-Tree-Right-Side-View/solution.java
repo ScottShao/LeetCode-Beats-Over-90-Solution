@@ -10,21 +10,14 @@
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> view = new ArrayList<Integer>();
-        if (root == null) {
-            return view;
-        }
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            TreeNode last = queue.getLast();
-            view.add(last.val);
-            
-            for (int i = 0, size = queue.size(); i < size; i++) {
-                TreeNode top = queue.poll();
-                if (top.left != null) queue.add(top.left);
-                if (top.right != null) queue.add(top.right);
-            }
-        }
+        if(null==root) return view;
+        dfs(view, root, 1);
         return view;
+    }
+    private void dfs(List<Integer> view, TreeNode root, int layer){
+        if(root == null) return;
+        if(layer > view.size()) view.add(root.val);
+        dfs(view, root.right, layer+1);
+        dfs(view, root.left, layer+1);
     }
 }
