@@ -15,10 +15,10 @@ public class Solution {
                 List<String> top = queue.poll();
                 String last = top.get(level);
                 for (int m = 0, size = last.length(); m < size; m++) {
-                    char[] chs = last.toCharArray();
+                    StringBuilder sb = new StringBuilder(last);
                     for (char j = 'a'; j <= 'z'; j++) {
-                        chs[m] = j;
-                        String s = new String(chs);
+                        sb.setCharAt(m, j);
+                        String s = sb.toString();
                         if (wordList.contains(s) && !visited.contains(s)) {
                             List<String> next = new ArrayList<>(top);
                             next.add(s);
