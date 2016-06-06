@@ -1,41 +1,67 @@
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-        List<List<String>> ladders = new ArrayList<>();
-        Queue<List<String>> queue = new LinkedList<>();
-        List<String> list = new ArrayList<>();
-        list.add(beginWord);
-        queue.add(list);
-        int level = 0;
-        Set<String> visited = new HashSet<>();
-        visited.add(beginWord);
-        
-        while (!queue.isEmpty()) {
-            Set<String> visiting = new HashSet<>();
-            for (int i = 0, len = queue.size(); i < len; i++) {
-                List<String> top = queue.poll();
-                String last = top.get(level);
-                for (int m = 0, size = last.length(); m < size; m++) {
-                    StringBuilder sb = new StringBuilder(last);
-                    for (char j = 'a'; j <= 'z'; j++) {
-                        sb.setCharAt(m, j);
-                        String s = sb.toString();
-                        if (wordList.contains(s) && !visited.contains(s)) {
-                            List<String> next = new ArrayList<>(top);
-                            next.add(s);
-                            queue.add(next);
-                            visiting.add(s);
-                            if (s.equals(endWord)) {
-                                ladders.add(next);
-                            }
+        HashMap<String, ArrayList<String>> h = new HashMap();
+        Set<String> set1 = new HashSet(), set2 = new HashSet();
+        set1.add(beginWord); set2.add(endWord);
+        BFS(set1, set2, wordList, h, true);
+
+        List<List<String>> ans = new ArrayList();
+        List<String> cur = new ArrayList();
+        cur.add(beginWord);
+        DFS(beginWord, endWord, h, cur, ans);
+        return ans;
+    }
+
+    private void BFS(Set<String> set1, Set<String> set2, Set<String> wordList, HashMap<String, ArrayList<String>> h, boolean forward) {
+        if (set1.size() > set2.size()) {
+            BFS(set2, set1, wordList, h, !forward);
+            return;
+        }
+        wordList.removeAll(set1);
+        wordList.removeAll(set2);
+        boolean connected = false;
+        Set<String> set3 = new HashSet();
+
+        for (String s : set1) {
+            char[] c = s.toCharArray();
+            for (int i = 0, len = c.length; i < len; i++) {
+                char ch = c[i];
+                for (char x = 'a'; x <= 'z'; x++)
+                    if (x != ch) {
+                        c[i] = x;
+                        String cand = new String(c);
+                        if (set2.contains(cand) || (!connected && wordList.contains(cand))) {
+                            if (set2.contains(cand))
+                                connected = true;
+                            else
+                                set3.add(cand);
+
+                            String cand1 = forward ? cand : s;
+                            String s1 = forward ? s : cand;
+                            ArrayList<String> cur = h.containsKey(s1) ? h.get(s1) : new ArrayList();
+                            cur.add(cand1);
+                            h.put(s1, cur);
                         }
                     }
-                }
+                c[i] = ch;
             }
-            if (ladders.size() > 0) break;
-            level++;
-            visited.addAll(visiting);
         }
-        
-        return ladders;
-    }
+        if (!connected && !set3.isEmpty())
+            BFS(set3, set2, wordList, h, forward);
+        }
+
+        private void DFS(String str, String ed, HashMap<String, ArrayList<String>> h, List<String> cur, List<List<String>> ans) {
+            if (str.equals(ed)) {
+                ans.add(new ArrayList(cur));
+                return;
+            }
+
+            if (!h.containsKey(str)) return;
+            List<String> next = h.get(str);
+            for (String i : next) {
+                cur.add(i);
+                DFS(i, ed, h, cur, ans);
+                cur.remove(cur.size() - 1);
+            }
+        }
 }
