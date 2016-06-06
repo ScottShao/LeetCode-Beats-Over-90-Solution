@@ -1,9 +1,11 @@
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-        HashMap<String, ArrayList<String>> h = new HashMap();
-        Set<String> set1 = new HashSet(), set2 = new HashSet();
-        set1.add(beginWord); set2.add(endWord);
-        BFS(set1, set2, wordList, h, true);
+        HashMap<String, List<String>> h = new HashMap<>();
+        Set<String> beginSet = new HashSet();
+        Set<String> endSet = new HashSet();
+        beginSet.add(beginWord); 
+        endSet.add(endWord);
+        BFS(beginSet, endSet, wordList, h, true);
 
         List<List<String>> ans = new ArrayList();
         List<String> cur = new ArrayList();
@@ -12,17 +14,17 @@ public class Solution {
         return ans;
     }
 
-    private void BFS(Set<String> set1, Set<String> set2, Set<String> wordList, HashMap<String, ArrayList<String>> h, boolean forward) {
-        if (set1.size() > set2.size()) {
-            BFS(set2, set1, wordList, h, !forward);
+    private void BFS(Set<String> beginSet, Set<String> endSet, Set<String> wordList, HashMap<String, List<String>> h, boolean forward) {
+        if (beginSet.size() > endSet.size()) {
+            BFS(endSet, beginSet, wordList, h, !forward);
             return;
         }
-        wordList.removeAll(set1);
-        wordList.removeAll(set2);
+        wordList.removeAll(beginSet);
+        wordList.removeAll(endSet);
         boolean connected = false;
-        Set<String> set3 = new HashSet();
+        Set<String> nextSet = new HashSet();
 
-        for (String s : set1) {
+        for (String s : beginSet) {
             char[] c = s.toCharArray();
             for (int i = 0, len = c.length; i < len; i++) {
                 char ch = c[i];
@@ -30,38 +32,38 @@ public class Solution {
                     if (x != ch) {
                         c[i] = x;
                         String cand = new String(c);
-                        if (set2.contains(cand) || (!connected && wordList.contains(cand))) {
-                            if (set2.contains(cand))
+                        if (endSet.contains(cand) || (!connected && wordList.contains(cand))) {
+                            if (endSet.contains(cand))
                                 connected = true;
                             else
-                                set3.add(cand);
+                                nextSet.add(cand);
 
-                            String cand1 = forward ? cand : s;
-                            String s1 = forward ? s : cand;
-                            ArrayList<String> cur = h.containsKey(s1) ? h.get(s1) : new ArrayList();
-                            cur.add(cand1);
-                            h.put(s1, cur);
+                            String next = forward ? cand : s;
+                            String key = forward ? s : cand;
+                            List<String> cur = h.containsKey(key) ? h.get(key) : new ArrayList();
+                            cur.add(next);
+                            h.put(key, cur);
                         }
                     }
                 c[i] = ch;
             }
         }
-        if (!connected && !set3.isEmpty())
-            BFS(set3, set2, wordList, h, forward);
+        if (!connected && !nextSet.isEmpty())
+            BFS(nextSet, endSet, wordList, h, forward);
+    }
+
+    private void DFS(String str, String ed, HashMap<String, List<String>> h, List<String> cur, List<List<String>> ans) {
+        if (str.equals(ed)) {
+            ans.add(new ArrayList(cur));
+            return;
         }
 
-        private void DFS(String str, String ed, HashMap<String, ArrayList<String>> h, List<String> cur, List<List<String>> ans) {
-            if (str.equals(ed)) {
-                ans.add(new ArrayList(cur));
-                return;
-            }
-
-            if (!h.containsKey(str)) return;
-            List<String> next = h.get(str);
-            for (String i : next) {
-                cur.add(i);
-                DFS(i, ed, h, cur, ans);
-                cur.remove(cur.size() - 1);
-            }
+        if (!h.containsKey(str)) return;
+        List<String> next = h.get(str);
+        for (String i : next) {
+            cur.add(i);
+            DFS(i, ed, h, cur, ans);
+            cur.remove(cur.size() - 1);
         }
+    }
 }
