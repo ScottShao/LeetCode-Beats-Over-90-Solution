@@ -7,10 +7,7 @@ public class Solution {
     
     private void dfs(int crt, int n, int level, List<Integer> comb, List<List<Integer>> results) {
         if (level == 0) {
-            List<Integer> newComb = new ArrayList<>();
-            for (Integer i : comb) {
-                newComb.add(i);
-            }
+            List<Integer> newComb = new ArrayList<>(comb);
             results.add(newComb);
             return;
         }
