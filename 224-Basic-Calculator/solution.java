@@ -10,10 +10,10 @@ public class Solution {
         int val = 0;
         
         for (char ch : chs) {
-            if (ch == ' ') {
-                continue;
-            } else if (Character.isDigit(ch)) {
+            if (ch >= '0' && ch <= '9') {
                 val = val * 10 + ch - '0';
+            } else if (ch == ' ') {
+                continue;  
             } else if (ch == '+') {
                 result += sign * val;
                 val = 0;
