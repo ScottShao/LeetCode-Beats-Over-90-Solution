@@ -12,7 +12,7 @@ public class Solution {
         for (char ch : chs) {
             if (ch == ' ') {
                 continue;
-            } else if (ch >= '0' && ch <= '9') {
+            } else if (Character.isDigit(ch)) {
                 val = val * 10 + ch - '0';
             } else if (ch == '+') {
                 result += sign * val;
