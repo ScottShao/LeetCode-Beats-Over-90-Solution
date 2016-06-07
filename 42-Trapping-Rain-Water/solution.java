@@ -1,23 +1,33 @@
 public class Solution {
     public int trap(int[] height){
-        int low = 0;
-        int high = height.length - 1;
-        while (low < high && height[low] <= height[low + 1]) low++;
-        while (low < high && height[high] <= height[high - 1]) high--;
-        int water = 0;
-        int leftmax = 0;
-        int rightmax = 0;
-        while(low <= high){
-            leftmax = Math.max(leftmax,height[low]);
-            rightmax = Math.max(rightmax,height[high]);
-            if(leftmax < rightmax){
-                water += (leftmax - height[low]);       // leftmax is smaller than rightmax, so the (leftmax-A[a]) water can be stored
-                low++;
-            } else {
-                water += (rightmax - height[high]);
-                high--;
+        int unitSum = 0;
+        int sum = 0;
+        int top = 0;
+        for(int i = 0; i < height.length; i++)
+        {
+            //in case of re-calculating in the next section;
+            if(top < height[i]) //collect only the higher bar;
+            {
+                sum += unitSum;
+                unitSum = 0;
+                top = height[i];
             }
+            else
+                unitSum += top - height[i];
         }
-        return water;
+        top = 0;
+        unitSum = 0; //reset;
+        for(int j = height.length - 1; j >= 0; j--)
+        {
+            if(top <= height[j]) //collect both the equal and higher bar;
+            {
+                sum += unitSum;
+                unitSum = 0;
+                top = height[j];
+            }
+            else
+                unitSum += top - height[j];
+        }
+        return sum;
     }
 }
