@@ -10,27 +10,32 @@ public class Solution {
         int val = 0;
         
         for (char ch : chs) {
-            if (ch >= '0' && ch <= '9') {
-                val = val * 10 + ch - '0';
-            } else if (ch == ' ') {
-                continue;  
-            } else if (ch == '+') {
-                result += sign * val;
-                val = 0;
-                sign = 1;
-            } else if (ch == '-') {
-                result += sign * val;
-                val = 0;
-                sign = -1;
-            } else if (ch == '(') {
-                exStack.push(result);
-                exStack.push(sign);
-                sign = 1;
-                result = 0;
-            } else {
-                result += sign * val;
-                result = result * exStack.pop() + exStack.pop();
-                val = 0;
+            switch(ch) {
+                case ' ':
+                    continue;
+                case '+':
+                    result += sign * val;
+                    val = 0;
+                    sign = 1;
+                    break;
+                case '-':
+                    result += sign * val;
+                    val = 0;
+                    sign = -1;
+                    break;
+                case '(':
+                    exStack.push(result);
+                    exStack.push(sign);
+                    sign = 1;
+                    result = 0;
+                    break;
+                case ')':
+                    result += sign * val;
+                    result = result * exStack.pop() + exStack.pop();
+                    val = 0;
+                    break;
+                default:
+                    val = val * 10 + ch - '0';
             }
         }
         
