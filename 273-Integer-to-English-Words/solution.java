@@ -5,7 +5,6 @@ public class Solution {
     private final String[] ONE2NINETEEN = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
                                             "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
                                             "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-    private final int[] vals = {1000000000, 1000000, 1000, 100};
     public String numberToWords(int num) {
         if (num == 0) {
             return "Zero";
@@ -16,21 +15,29 @@ public class Solution {
     }
     
     private void numberToWords(int num, StringBuilder sb) {
-        for (int i = 0; i < vals.length; i++) {
-            if (num >= vals[i]) {
-                numberToWords(num / vals[i], sb);
-                sb.append(" ").append(SCALES[i]);
-                num %= vals[i];
-            }
-        }
-        
-        int ties = num / 10;
-        if (ties >= 2) {
-            sb.append(" ").append(LESSTHANHUNDRED[ties]);
-            num -= ties * 10;
-        }
-        if (num != 0) {
+        if (num == 0) {
+            return; 
+        } if (num < 20) {
             sb.append(" ").append(ONE2NINETEEN[num]);
+        } else if (num < 100) {
+            sb.append(" ").append(LESSTHANHUNDRED[num / 10]);
+            numberToWords(num % 10, sb);
+        } else if (num < 1000) {
+            numberToWords(num / 100, sb);
+            sb.append(" Hundred");
+            numberToWords(num % 100, sb);
+        } else if (num < 1000000) {
+            numberToWords(num / 1000, sb);
+            sb.append(" Thousand");
+            numberToWords(num % 1000, sb);
+        } else if (num < 1000000000) {
+            numberToWords(num / 1000000, sb);
+            sb.append(" Million");
+            numberToWords(num % 1000000, sb);
+        } else {
+            numberToWords(num / 1000000000, sb);
+            sb.append(" Billion");
+            numberToWords(num % 1000000000, sb);
         }
     }
 }
