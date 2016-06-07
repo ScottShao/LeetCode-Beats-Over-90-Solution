@@ -2,6 +2,8 @@ public class Solution {
     public int trap(int[] height){
         int low = 0;
         int high = height.length - 1;
+        while (low < high && height[low] <= height[low + 1]) low++;
+        while (low < high && height[high] <= height[high - 1]) high--;
         int water = 0;
         int leftmax = 0;
         int rightmax = 0;
