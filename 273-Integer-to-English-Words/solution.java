@@ -1,6 +1,6 @@
 public class Solution {
-    private final String[] SCALES = {"Billion","Million", "Thousand", "Hundred"};
-    private final String[] LESSTHANHUNDRED = {"", "", "Twenty", "Thirty", "Forty", "Fifty", 
+    private final String[] SCALES = {"Hundred", "Thousand","Million", "Billion"};
+    private final String[] LESSTHANHUNDRED = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", 
                                             "Sixty", "Seventy", "Eighty", "Ninety"};
     private final String[] ONE2NINETEEN = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
                                             "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
@@ -18,25 +18,31 @@ public class Solution {
         if (num == 0) {
             return; 
         } if (num < 20) {
-            sb.append(" ").append(ONE2NINETEEN[num]);
+            sb.append(ONE2NINETEEN[num]);
+            sb.append(" ");
         } else if (num < 100) {
-            sb.append(" ").append(LESSTHANHUNDRED[num / 10]);
+            sb.append(LESSTHANHUNDRED[num / 10]);
+            sb.append(" ");
             numberToWords(num % 10, sb);
         } else if (num < 1000) {
             numberToWords(num / 100, sb);
-            sb.append(" Hundred");
+            sb.append(SCALES[0]);
+            sb.append(" ");
             numberToWords(num % 100, sb);
         } else if (num < 1000000) {
             numberToWords(num / 1000, sb);
-            sb.append(" Thousand");
+            sb.append(SCALES[1]);
+            sb.append(" ");
             numberToWords(num % 1000, sb);
         } else if (num < 1000000000) {
             numberToWords(num / 1000000, sb);
-            sb.append(" Million");
+            sb.append(SCALES[2]);
+            sb.append(" ");
             numberToWords(num % 1000000, sb);
         } else {
             numberToWords(num / 1000000000, sb);
-            sb.append(" Billion");
+            sb.append(SCALES[3]);
+            sb.append(" ");
             numberToWords(num % 1000000000, sb);
         }
     }
