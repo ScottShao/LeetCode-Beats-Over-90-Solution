@@ -3,12 +3,12 @@ public class Solution {
         int major = nums[0];
         int count = 1;
         for(int i = 1; i < nums.length;i++){
-            if(count == 0){
-                count++;
+            if (major == nums[i]){
+                count ++;
+            } else if(count == 0){
+                count ++;
                 major = nums[i];
-            }else if(major == nums[i]){
-                count++;
-            }else {
+            } else {
                 count--;
             }
         }
