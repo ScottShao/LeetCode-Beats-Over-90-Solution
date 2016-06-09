@@ -8,11 +8,11 @@ public class Solution {
         int count = 1;
         int crt = 1;
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == prev) {
-                count++;
-            } else {
+            if (nums[i] != prev) {
                 count = 1;
                 prev = nums[i];
+            } else {
+                count++;
             }
             
             if (count <= MAX_DUPLICATES) {
