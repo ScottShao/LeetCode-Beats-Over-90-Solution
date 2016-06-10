@@ -7,10 +7,11 @@ public class Solution {
             int min = Integer.MAX_VALUE;
             int minIndex = 0;
             for(int j = 0; j < primes.length; j++){
-                if(ugly[pointer[j]] * primes[j] < min){
-                    min = ugly[pointer[j]] * primes[j];
+                int temp = ugly[pointer[j]] * primes[j];
+                if(temp < min){
+                    min = temp;
                     minIndex = j;
-                }else if(ugly[pointer[j]] * primes[j] == min){
+                }else if(temp == min){
                     pointer[j]++;
                 }
             }
