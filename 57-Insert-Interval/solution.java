@@ -9,34 +9,21 @@
  */
 public class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        List<Interval> results = new ArrayList<>();
-        int newStart = newInterval.start;
-        int newEnd = newInterval.end;
-        int idx = 0;
-        for (; idx < intervals.size(); idx++) {
-            Interval temp = intervals.get(idx);
-            if (temp.end >= newStart) {
-                newStart = Math.min(temp.start, newStart);
-                break;    
-            } else {
-                results.add(temp);
-            }
-        }
-        for (; idx < intervals.size(); idx++) {
-            Interval temp = intervals.get(idx);
-            if (temp.start > newEnd) {
-                break;    
-            } else {
-                newEnd = Math.max(temp.end, newEnd);
-            }
-        }
-        results.add(new Interval(newStart, newEnd));
-        
-        while (idx < intervals.size()) {
-            results.add(intervals.get(idx));
-            idx++;
-        }
-        
-        return results;
+        List<Interval> result = new LinkedList<>();
+    int i = 0;
+    // add all the intervals ending before newInterval starts
+    while (i < intervals.size() && intervals.get(i).end < newInterval.start)
+        result.add(intervals.get(i++));
+    // merge all overlapping intervals to one considering newInterval
+    while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
+        newInterval = new Interval( // we could mutate newInterval here also
+                Math.min(newInterval.start, intervals.get(i).start),
+                Math.max(newInterval.end, intervals.get(i).end));
+        i++;
+    }
+    result.add(newInterval); // add the union of intervals we got
+    // add all the rest
+    while (i < intervals.size()) result.add(intervals.get(i++)); 
+    return result;
     }
 }
