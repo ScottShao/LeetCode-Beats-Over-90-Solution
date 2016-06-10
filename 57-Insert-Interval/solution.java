@@ -9,21 +9,49 @@
  */
 public class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        List<Interval> result = new LinkedList<>();
-    int i = 0;
-    // add all the intervals ending before newInterval starts
-    while (i < intervals.size() && intervals.get(i).end < newInterval.start)
-        result.add(intervals.get(i++));
-    // merge all overlapping intervals to one considering newInterval
-    while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
-        newInterval = new Interval( // we could mutate newInterval here also
-                Math.min(newInterval.start, intervals.get(i).start),
-                Math.max(newInterval.end, intervals.get(i).end));
-        i++;
+        if(intervals == null || newInterval == null){
+            return new ArrayList<>(intervals);
+        }
+        List<Interval> result = new ArrayList<>();
+        intervals.add(0, new Interval(Integer.MIN_VALUE, Integer.MIN_VALUE)); //Add for using when newInterval is the smallest interval
+        intervals.add(new Interval(Integer.MAX_VALUE, Integer.MAX_VALUE)); //Add for using when newInterval is the greatest interval
+        int startIndex = binarySearch(intervals, newInterval.start, false);//Start compares to end
+        int endIndex = binarySearch(intervals, newInterval.end, true);//End compares to start
+        //Insert intervals smaller than newInterval
+        for(int i = 1; i < startIndex; ++i){
+            result.add(intervals.get(i));
+        }
+        //endIndex is the first Interval in intervals that has start greater than newInterval.end
+        if(endIndex < intervals.size() && intervals.get(endIndex).start == newInterval.end){
+            ++endIndex;
+        }
+        //Merge
+        result.add(new Interval(Math.min(intervals.get(startIndex).start, newInterval.start), Math.max(intervals.get(endIndex - 1).end, newInterval.end)));
+        //Insert intervals greater than newInterval
+        for(int i = endIndex; i < intervals.size() - 1; ++i){
+            result.add(intervals.get(i));
+        }
+        return result;
     }
-    result.add(newInterval); // add the union of intervals we got
-    // add all the rest
-    while (i < intervals.size()) result.add(intervals.get(i++)); 
-    return result;
+
+    private int binarySearch(List<Interval> intervals, int val, boolean isStart){
+        int low = 0;
+        int high = intervals.size();
+        while(low < high){
+            int middle = low + (high - low) / 2;
+            Interval interval = intervals.get(middle);
+            int curVal = interval.end;
+            if(isStart){
+                curVal = interval.start;
+            }
+            if(val == curVal){
+                return middle;
+            }else if(val > curVal){
+                low = middle + 1;
+            }else{
+                high = middle;
+            }
+        }
+        return low;
     }
 }
