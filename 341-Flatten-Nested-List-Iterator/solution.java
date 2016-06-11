@@ -36,7 +36,7 @@ public class NestedIterator implements Iterator<Integer> {
         } else{
             Integer item = nestedIter.next();
             if (!nestedIter.hasNext()){
-                curtElem = null;
+                curtElem =  null;
             }
             return item;
         }
