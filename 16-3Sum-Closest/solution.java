@@ -2,12 +2,6 @@ public class Solution {
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
         int last = nums.length - 1;
-        if (target >= 0 && target - nums[last] * 3 >= 0) {
-            return nums[last - 2] + nums[last - 1] + nums[last];
-        }
-        if (target <= 0 && nums[0] * 3 - target >= 0) {
-            return nums[0] + nums[1] + nums[2];
-        }
         
         int dif = Integer.MAX_VALUE;
         int result = target;
