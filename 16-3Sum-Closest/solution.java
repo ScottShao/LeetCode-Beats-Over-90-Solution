@@ -10,6 +10,13 @@ public class Solution {
             }
             int low = i + 1;
             int high = last;
+            int temp = target - nums[i];
+            if (temp - 2 * nums[last] >= 0) {
+                temp -= nums[last] + nums[last - 1];
+                dif = temp  < dif ? temp : dif;
+                result = target - temp;
+                continue;
+            }
             while (low < high) {
                 int crt = nums[i] + nums[low] + nums[high];
                 if (target > crt) {
