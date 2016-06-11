@@ -1,1 +1,1 @@
-# LeetCode Solution that beats over 90% 
+# LeetCode solutions that beat over 90% 
