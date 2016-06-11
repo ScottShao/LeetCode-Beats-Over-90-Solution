@@ -9,9 +9,8 @@ public class Solution {
             return nums[0] + nums[1] + nums[2];
         }
         
-        int sign = 1;
         int dif = Integer.MAX_VALUE;
-        int crt;
+        int result = target;
         for (int i = 0; i <= last - 2; i++) {
             if (nums[i] * 3 - target >= dif) {
                 break;
@@ -19,18 +18,18 @@ public class Solution {
             int low = i + 1;
             int high = last;
             while (low < high) {
-                crt = nums[i] + nums[low] + nums[high];
+                int crt = nums[i] + nums[low] + nums[high];
                 int newDif = crt - target;
                 if (newDif < 0) {
                     if (-newDif < dif) {
                         dif = -newDif;
-                        sign = -1;
+                        result = crt;
                     }
                     low++;
                 } else if (newDif > 0) {
                     if (newDif < dif) {
                         dif = newDif;
-                        sign = 1;
+                        result = crt;
                     }
                     high--;
                 } else {
@@ -38,6 +37,6 @@ public class Solution {
                 }
             }
         }
-        return target + sign * dif;
+        return result;
     }
 }
