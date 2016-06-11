@@ -6,23 +6,22 @@ public class Solution {
         int result = target;
         for (int i = 0; i <= last - 2; i++) {
             if (nums[i] * 3 - target >= dif) {
-                break;
+                break; //end search early if the minDif is already found
             }
             int low = i + 1;
             int high = last;
             while (low < high) {
                 int crt = nums[i] + nums[low] + nums[high];
-                int newDif = crt - target;
-                if (newDif < 0) {
-                    if (-newDif < dif) {
-                        dif = -newDif;
+                if (target > crt) {
+                    if (target - crt < dif) {
                         result = crt;
+                        dif = target - crt;
                     }
                     low++;
-                } else if (newDif > 0) {
-                    if (newDif < dif) {
-                        dif = newDif;
+                } else if (target < crt) {
+                    if (crt - target < dif) {
                         result = crt;
+                        dif = crt - target;
                     }
                     high--;
                 } else {
