@@ -7,7 +7,7 @@ public class Solution {
         for (int num : nums1) {
             numSet.add(num);
         }
-        Set<Integer> intersection = new HashSet<>();
+        Set<Integer> intersection = new HashSet<>(nums2.length);
         for (int num : nums2) {
             if (numSet.contains(num)) {
                 intersection.add(num);
