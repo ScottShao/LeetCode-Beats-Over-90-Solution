@@ -18,12 +18,9 @@ public class Solution {
         int count = 0;
         for (int num : nums2) {
             int[] c = map.get(num);
-            if (c != null) {
+            if (c != null && c[0] > 0) {
                 c[0]--;
                 result[count++] = num;
-                if (c[0] == 0) {
-                    map.remove(num);
-                }
             }
         }
         
