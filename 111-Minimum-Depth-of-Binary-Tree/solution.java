@@ -14,7 +14,11 @@ public class Solution {
         if(root.left != null && root.right != null){
             return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
         }else{
-            return Math.max(minDepth(root.left), minDepth(root.right)) + 1;
+            if (root.left == null) {
+                return minDepth(root.right) + 1;
+            } else {
+                return minDepth(root.left) + 1;
+            }
         }
     }
 }
