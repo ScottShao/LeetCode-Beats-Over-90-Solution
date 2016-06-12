@@ -1,24 +1,21 @@
 public class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
-        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) {
-            return new int[0];
+        if (nums1.length == 0 || nums2.length == 0) return new int[0];
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int [] result = new int [Math.min(n1, n2)];
+        int i = 0;
+        BitSet set = new BitSet();
+        for (i = 0; i < n1; i++) {
+            set.set(nums1[i]);
         }
-        Set<Integer> numSet = new HashSet<>(nums1.length);
-        for (int num : nums1) {
-            numSet.add(num);
-        }
-        Set<Integer> intersection = new HashSet<>(nums2.length);
-        for (int num : nums2) {
-            if (numSet.contains(num)) {
-                intersection.add(num);
+        int count = 0;
+        for (i = 0; i < n2; i++) {
+            if (set.get(nums2[i])){
+                result[count++] = nums2[i];
+                set.set(nums2[i], false);
             }
         }
-        int[] result = new int[intersection.size()];
-        int i = 0;
-        for (int num : intersection) {
-            result[i] = num;
-            i++;
-        }
-        return result;
+        return Arrays.copyOfRange(result, 0, count);
     }
 }
