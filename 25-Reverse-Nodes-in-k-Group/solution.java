@@ -8,28 +8,39 @@
  */
 public class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        int count = 0;
-        ListNode crt = head;
-        while (crt != null && count < k) {
-            crt = crt.next;
-            count++;
-        }
-        
-        if (count < k) {
+        if (head == null || k == 1) {
             return head;
-        } else {
-            ListNode prev = null;
-            crt = head;
-            
-            for (int i = 0; i < k; i++) {
-                ListNode temp = crt.next;
-                crt.next = prev;
-                prev = crt;
-                crt = temp;
+        }
+        ListNode newHead = head;
+        ListNode prevHead = new ListNode(-1);
+        ListNode re = prevHead;
+        while (newHead != null) {
+            int count = 0;
+            ListNode crt = newHead;
+            while (crt != null && count != k) {
+                crt = crt.next;
+                count++;
             }
             
-            head.next = reverseKGroup(crt, k);
-            return prev;
+            if (count < k) {
+                prevHead.next = newHead;
+                break;
+            } else {
+                ListNode prev = null;
+                crt = newHead;
+                
+                for (int i = 0; i < k; i++) {
+                    ListNode temp = crt.next;
+                    crt.next = prev;
+                    prev = crt;
+                    crt = temp;
+                }
+                
+                prevHead.next = prev;
+                prevHead = newHead;
+                newHead = crt;
+            }
         }
+        return re.next;
     }
 }
