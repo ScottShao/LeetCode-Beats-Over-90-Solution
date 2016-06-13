@@ -8,25 +8,23 @@ public class Solution {
         if (prev == 0) {
             return 0;
         }
-        int prevNum = 1;
-        int prepreNum = 1;
-        for (int i = 2; i <= chs.length; i++) {
-            int crt = chs[i - 1] - '0';
-            int temp = prevNum;
+        int first = 1;
+        int second = 1;
+        for (int i = 1; i < chs.length; i++) {
+            int crt = chs[i] - '0';
+            int temp = second;
             if (crt == 0) {
                 if (prev > 2 || prev == 0) {
-                    prevNum = 0;
+                    second = 0;
                     break;
                 }
-                prevNum = prepreNum;
-            } else {
-                if (prev == 1 || (prev == 2 && crt <= 6)) {
-                    prevNum += prepreNum;
-                }
+                second = first;
+            } else if (prev != 0 && prev * 10 + crt <= 26) {
+                second += first;
             }
             prev = crt;
-            prepreNum = temp;
+            first = temp;
         }
-        return prevNum;
+        return second;
     }
 }
