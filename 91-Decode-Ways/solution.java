@@ -1,30 +1,18 @@
 public class Solution {
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        char[] chs = s.toCharArray();
-        int prev = chs[0] - '0';
-        if (prev == 0) {
-            return 0;
-        }
+        if(s.length() == 0) return 0;
+        int pre = 26;
+        int answer = 0;
         int first = 1;
         int second = 1;
-        for (int i = 1; i < chs.length; i++) {
-            int crt = chs[i] - '0';
-            int temp = second;
-            if (crt == 0) {
-                if (prev > 2 || prev == 0) {
-                    second = 0;
-                    break;
-                }
-                second = first;
-            } else if (prev != 0 && prev * 10 + crt <= 26) {
-                second += first;
-            }
-            prev = crt;
-            first = temp;
+        char[] chs = s.toCharArray();
+        for(int i = chs.length - 1; i >= 0; i--){
+            int digit = chs[i] - '0';
+            answer = digit == 0 ? 0 : first + (digit * 10 + pre <= 26 ? second : 0);
+            second = first; 
+            first = answer; 
+            pre = digit;
         }
-        return second;
+        return answer;
     }
 }
