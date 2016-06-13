@@ -28,16 +28,17 @@ public class Solution {
     }
     
     private void addWord(TrieNode root, String word, int index) {
-        for (int i = word.length() - 1; i >= 0; i--) {
-            if (root.next[word.charAt(i) - 'a'] == null) {
-                root.next[word.charAt(i) - 'a'] = new TrieNode();
+        char[] chs = word.toCharArray();
+        for (int i = chs.length - 1; i >= 0; i--) {
+            if (root.next[chs[i] - 'a'] == null) {
+                root.next[chs[i] - 'a'] = new TrieNode();
             }
     
-            if (isPalindrome(word, 0, i)) {
+            if (isPalindrome(chs, 0, i)) {
                 root.list.add(index);
             }
     
-            root = root.next[word.charAt(i) - 'a'];
+            root = root.next[chs[i] - 'a'];
         }
     
         root.list.add(index);
@@ -45,12 +46,13 @@ public class Solution {
     }
     
     private void search(String[] words, int i, TrieNode root, List<List<Integer>> list) {
-        for (int j = 0; j < words[i].length(); j++) {   
-            if (root.index >= 0 && root.index != i && isPalindrome(words[i], j, words[i].length() - 1)) {
+        char[] chs = words[i].toCharArray();
+        for (int j = 0; j < chs.length; j++) {   
+            if (root.index >= 0 && root.index != i && isPalindrome(chs, j, chs.length - 1)) {
                 list.add(Arrays.asList(i, root.index));
             }
     
-            root = root.next[words[i].charAt(j) - 'a'];
+            root = root.next[chs[j] - 'a'];
             if (root == null) return;
         }
     
@@ -60,9 +62,9 @@ public class Solution {
         }
     }
     
-    private boolean isPalindrome(String word, int i, int j) {
+    private boolean isPalindrome(char[] word, int i, int j) {
         while (i < j) {
-            if (word.charAt(i++) != word.charAt(j--)) return false;
+            if (word[i++] != word[j--]) return false;
         }
     
         return true;
