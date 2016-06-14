@@ -2,7 +2,6 @@ public class Solution {
     public int hIndex(int[] citations) {
        if(citations == null)   return 0;
         int[] buffer = new int[citations.length+1];
-        Arrays.fill(buffer, 0);
     
         for(int num : citations) {
             int idx = Math.min(num, citations.length);
