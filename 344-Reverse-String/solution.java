@@ -7,9 +7,10 @@ public class Solution {
         int n = chs.length - 1;
         for (int j = (n - 1) >>> 1; j >= 0; j--) {
             int k = n - j;
-            char temp = chs[j];
-            chs[j] = chs[k];
-            chs[k] = temp;
+            char cj = chs[j];
+            char ck = chs[k];
+            chs[j] = ck;
+            chs[k] = cj;
         }
         return new String(chs);
     }
