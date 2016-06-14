@@ -8,32 +8,41 @@
  * }
  */
 public class Solution {
+    private TreeNode ancestor;
+    
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Map<TreeNode, TreeNode> parent = new HashMap<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        parent.put(root, null);
-        stack.push(root);
-
-        while (!parent.containsKey(p) || !parent.containsKey(q)) {
-            TreeNode node = stack.pop();
-            if (node.left != null) {
-                parent.put(node.left, node);
-                stack.push(node.left);
-            }
-            if (node.right != null) {
-                parent.put(node.right, node);
-                stack.push(node.right);
-            }
+        if (root == null || (p == null && q == null)) {
+            return null;
         }
-        Set<TreeNode> ancestors = new HashSet<>();
-        while (p != null) {
-            ancestors.add(p);
-            p = parent.get(p);
+        if (q == null) {
+            q = p;
         }
-        while (!ancestors.contains(q))
-            q = parent.get(q);
-        return q;
+        if (p == null) {
+            p = q;
+        }
+        search(root, p, q);
+        return ancestor;
     }
     
-
+    private int search(TreeNode crt, TreeNode p, TreeNode q) {
+        if (crt == null || ancestor != null) {
+            return 0;
+        } else {
+            int re = 0;
+            if (crt == p || crt == q) {
+                re++;
+            }
+            re += search(crt.left, p, q);
+            if (re == 2) {
+                ancestor = crt;
+                return 0;
+            }
+            re += search(crt.right, p, q);
+            if (re == 2) {
+                ancestor = crt;
+                return 0;
+            }
+            return re;
+        }
+    }
 }
