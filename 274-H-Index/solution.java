@@ -1,11 +1,20 @@
 public class Solution {
     public int hIndex(int[] citations) {
-        if (citations == null || citations.length == 0) {
-            return 0;
+       if(citations == null)   return 0;
+        int[] buffer = new int[citations.length+1];
+        Arrays.fill(buffer, 0);
+    
+        for(int num : citations) {
+            int idx = Math.min(num, citations.length);
+            buffer[idx]++;
         }
-        Arrays.sort(citations);
-        int i = 0;
-        while (i < citations.length && citations[i] < citations.length - i) i++;
-        return citations.length - i;
+    
+        int sum = 0;
+        for(int i = buffer.length -1 ; i >= 0 ; i--) {
+            sum += buffer[i];
+            if(sum >= i) return i;
+        }
+    
+        return 0;
     }
 }
