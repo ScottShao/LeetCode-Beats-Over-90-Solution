@@ -4,11 +4,17 @@ public class Solution {
         if (s == null) {
             return results;
         }
-        search(s.toCharArray(), 0, new ArrayList<String>(), results, new HashMap<Integer, Set<Integer>>());
+        char[] value = s.toCharArray();
+        int len = value.length;
+        boolean[][] p = new boolean[len][len];
+        for (int i = 0; i < len; i++)
+            for (int j = 0; j < len - i; j++)
+                p[j][j + i] = value[j] == value[j + i] && (i <= 1 || p[j + 1][j + i - 1]);
+        search(s.toCharArray(), 0, new ArrayList<String>(), results, new HashMap<Integer, Set<Integer>>(), p);
         return results;
     }
     
-    private void search(char[] value, int start, List<String> crt, List<List<String>> results, Map<Integer, Set<Integer>> memo) {
+    private void search(char[] value, int start, List<String> crt, List<List<String>> results, Map<Integer, Set<Integer>> memo, boolean[][] p) {
         if (start == value.length) {
             List<String> temp = new ArrayList<>(crt);
             results.add(temp);
@@ -18,30 +24,21 @@ public class Solution {
             if (set != null) {
                 for (int idx : set) {
                     crt.add(new String(value, start, idx - start));
-                    search(value, idx, crt, results, memo);
+                    search(value, idx, crt, results, memo, p);
                     crt.remove(len);
                 }
             } else {
                 set = new HashSet<>();
                 for (int j = start; j < value.length; j++) {
-                    if (isPalindrome(value, start, j)) {
+                    if (p[start][j]) {
                         set.add(j + 1);
                         crt.add(new String(value, start, j - start + 1));
-                        search(value, j + 1, crt, results, memo);
+                        search(value, j + 1, crt, results, memo, p);
                         crt.remove(len);
                     }
                 }
                 memo.put(start, set);
             }
         }
-    }
-    
-    private boolean isPalindrome(char[] value, int i, int j) {
-        while (i < j) {
-            if (value[i++] != value[j--]) {
-                return false;
-            }
-        }
-        return true;
     }
 }
