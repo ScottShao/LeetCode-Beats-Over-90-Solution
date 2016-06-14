@@ -6,8 +6,9 @@ public class Solution {
         char[] chs = s.toCharArray();
         int low = 0;
         int high = chs.length - 1;
+        char temp;
         while (low < high) {
-            char temp = chs[low];
+            temp = chs[low];
             chs[low] = chs[high];
             chs[high] = temp;
             low++;
