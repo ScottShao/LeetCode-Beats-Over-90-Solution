@@ -7,9 +7,9 @@ public class Solution {
         int low = 0;
         int high = chs.length - 1;
         while (low < high) {
-            chs[low] ^= chs[high];
-            chs[high] ^= chs[low];
-            chs[low] ^= chs[high];
+            char temp = chs[low];
+            chs[low] = chs[high];
+            chs[high] = temp;
             low++;
             high--;
         }
