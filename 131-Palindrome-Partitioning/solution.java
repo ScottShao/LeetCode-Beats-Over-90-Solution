@@ -7,9 +7,11 @@ public class Solution {
         char[] value = s.toCharArray();
         int len = value.length;
         boolean[][] p = new boolean[len][len];
-        for (int i = 0; i < len; i++)
-            for (int j = 0; j < len - i; j++)
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len - i; j++) {
                 p[j][j + i] = value[j] == value[j + i] && (i <= 1 || p[j + 1][j + i - 1]);
+            }
+        }
         search(s.toCharArray(), 0, new ArrayList<String>(), results, p);
         return results;
     }
