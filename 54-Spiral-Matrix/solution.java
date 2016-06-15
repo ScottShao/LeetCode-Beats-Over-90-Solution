@@ -1,11 +1,11 @@
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> results = new ArrayList<>();
-        int endRow = matrix.length - 1;
-        if (endRow < 0) {
+        if (matrix == null || matrix.length == 0) {
             return results;
         }
         int startRow = 0;
+        int endRow = matrix.length - 1;
         int startCol = 0;
         int endCol = matrix[0].length - 1;
         while (startRow <= endRow && startCol <= endCol) {
