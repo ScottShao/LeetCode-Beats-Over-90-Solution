@@ -20,15 +20,12 @@ public class Solution {
         re[0] = low;
         high = nums.length - 1;
         while (low < high) {
-            int mid = low + ((high - low) >>> 1);
-            if (nums[mid] <= target) {
-                low = mid + 1;
-            } else {
+            int mid = low + ((high - low + 1) >>> 1);
+            if (nums[mid] > target) {
                 high = mid - 1;
+            } else {
+                low = mid;
             }
-        }
-        if (nums[low] != target) {
-            low--;
         }
         re[1] = low;
         return re;
