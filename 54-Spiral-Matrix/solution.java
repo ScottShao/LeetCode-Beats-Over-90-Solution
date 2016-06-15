@@ -19,23 +19,17 @@ public class Solution {
             }
             endCol--;
             
-            if (startRow <= endRow) {
-                for (int j = endCol; j >= startCol; j--) {
-                    results.add(matrix[endRow][j]);
-                }
-                endRow--;
-            } else {
-                break;
+            for (int j = endCol; j >= startCol && startRow <= endRow; j--) {
+                results.add(matrix[endRow][j]);
             }
+            endRow--;
+           
             
-            if (startCol <= endCol) {
-                for (int i = endRow; i >= startRow; i--) {
-                    results.add(matrix[i][startCol]);
-                }
-                startCol++;
-            } else {
-                break;
+            for (int i = endRow; i >= startRow && startCol <= endCol; i--) {
+                results.add(matrix[i][startCol]);
             }
+            startCol++;
+           
         }
         return results;
     }
