@@ -24,6 +24,8 @@ public class Solution {
                     results.add(matrix[endRow][j]);
                 }
                 endRow--;
+            } else {
+                break;
             }
             
             if (startCol <= endCol) {
@@ -31,6 +33,8 @@ public class Solution {
                     results.add(matrix[i][startCol]);
                 }
                 startCol++;
+            } else {
+                break;
             }
         }
         return results;
