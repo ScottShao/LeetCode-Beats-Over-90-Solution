@@ -6,16 +6,18 @@ public class Solution {
         }
         int min  = prices[0];
         int max = prices[0];
+        int maxProfit = 0;
         int profit = 0;
         for (int i = 1; i < len; i++) {
             if (prices[i] > max) {
-                profit = Math.max(prices[i] - min, profit);
+                profit = prices[i] - min;
                 max = prices[i];
             } else if (prices[i] < min) {
                 min = prices[i];
                 max = prices[i];
+                maxProfit = Math.max(profit, maxProfit);
             }
         }
-        return profit;
+        return Math.max(maxProfit, profit);
     }
 }
