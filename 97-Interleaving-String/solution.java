@@ -12,13 +12,8 @@ public class Solution {
         char[] v3 = s3.toCharArray();
         dp[0] = true;
         for (int i = 0; i < l1; i++) {
-            if (v1[i] == v3[i]) {
-                dp[i + 1] = true;
-            } else {
-                break;
-            }
+            dp[i + 1] = dp[i] && v1[i] == v3[i];
         }
-        boolean isMatching = true;
         for (int i = 0; i < l2; i++) {
             dp[0] = dp[0] == true && v2[i] == v3[i];
             for (int j = 0; j < l1; j++) {
