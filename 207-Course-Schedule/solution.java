@@ -18,9 +18,13 @@ public class Solution {
     }
     
     private boolean dfs(List<Integer>[] graph, int start, boolean[] visited, boolean[] visiting, int numCourses) {
+        if (visited[start]) {
+            return true;
+        }
         if (visiting[start]) {
             return false;
         }
+        
         visiting[start] = true;
         if (graph[start] != null) {
             for (int node : graph[start]) {
