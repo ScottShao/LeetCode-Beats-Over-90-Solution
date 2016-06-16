@@ -10,10 +10,8 @@ public class Solution {
         boolean[] visited = new boolean[numCourses];
         boolean[] visiting = new boolean[numCourses];
         for (int i = 0; i < numCourses; i++) { 
-            if (!visited[i]) {
-                if (!dfs(graph, i, visited, visiting, numCourses)) {
+            if (!visited[i] && !dfs(graph, i, visited, visiting, numCourses)) {
                     return false;
-                }
             }
         }
         return true;
