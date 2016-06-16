@@ -7,10 +7,11 @@ public class Solution {
         for (int [] p : prerequisites) {
             graph[p[0]].add(p[1]);
         }
-        int[] status = new int[numCourses];
+        boolean[] visited = new boolean[numCourses];
+        boolean[] visiting = new boolean[numCourses];
         for (int i = 0; i < numCourses; i++) { 
-            if (status[i] == 0) {
-                if (!dfs(graph, i, status, numCourses)) {
+            if (!visited[i]) {
+                if (!dfs(graph, i, visited, visiting, numCourses)) {
                     return false;
                 }
             }
@@ -18,19 +19,20 @@ public class Solution {
         return true;
     }
     
-    private boolean dfs(List<Integer>[] graph, int start, int[] status, int numCourses) {
-        if (status[start] == 1) {
+    private boolean dfs(List<Integer>[] graph, int start, boolean[] visited, boolean[] visiting, int numCourses) {
+        if (visiting[start]) {
             return false;
         }
-        status[start] = 1;
+        visiting[start] = true;
         List<Integer> nextNodes = graph[start];
         for (int node : nextNodes) {
-            if (!dfs(graph, node, status, numCourses)) {
+            if (!dfs(graph, node, visited, visiting, numCourses)) {
                 return false;
             }
-            status[node] = 2;
+            visited[node] = true;
         }
-        status[start] = 2;
+        visited[start] = true;
+        visiting[start] = false;
         return true;
     }
 }
