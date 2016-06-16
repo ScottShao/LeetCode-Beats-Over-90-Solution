@@ -22,9 +22,8 @@ public class Solution {
             return false;
         }
         visiting[start] = true;
-        List<Integer> nextNodes = graph[start];
-        if (nextNodes != null) {
-            for (int node : nextNodes) {
+        if (graph[start] != null) {
+            for (int node : graph[start]) {
                 if (!dfs(graph, node, visited, visiting, numCourses)) {
                     return false;
                 }
