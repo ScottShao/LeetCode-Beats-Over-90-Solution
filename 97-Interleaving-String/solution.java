@@ -6,42 +6,32 @@ public class Solution {
         if (l1 + l2 != l3) {
             return false;
         }
-        boolean[][] dp = new boolean[l1 + 1][l2 + 1];
-        dp[0][0] = true;
+        boolean[] dp = new boolean[l1 + 1];
         char[] v1 = s1.toCharArray();
         char[] v2 = s2.toCharArray();
         char[] v3 = s3.toCharArray();
+        dp[0] = true;
         for (int i = 0; i < l1; i++) {
             if (v1[i] == v3[i]) {
-                dp[i + 1][0] = true;
+                dp[i + 1] = true;
             } else {
                 break;
             }
         }
-        
+        boolean isMatching = true;
         for (int i = 0; i < l2; i++) {
-            if (v2[i] == v3[i]) {
-                dp[0][i + 1] = true;
-            } else {
-                break;
-            }
-        }
-        
-        for (int i = 1; i <= l1; i++) {
-            for (int j = 1; j <= l2; j++) {
-                int index = i + j - 1;
-                if (v1[i - 1] != v3[index] && v2[j - 1] != v3[index]) {
-                    dp[i][j] = false;
+            dp[0] = dp[0] == true && v2[i] == v3[i];
+            for (int j = 0; j < l1; j++) {
+                int index = i + j + 1;
+                if (v1[j] != v3[index] && v2[i] != v3[index]) {
+                    dp[j + 1] = false;
                 } else {
-                    if (v1[i - 1] == v3[index]) {
-                        dp[i][j] = dp[i- 1][j];
-                    }
-                    if (v2[j - 1] == v3[index]) {
-                        dp[i][j] = dp[i][j] || dp[i][j - 1];
-                    }
+                    if (v1[j] == v3[index]) {
+                        dp[j + 1] = dp[j + 1] || dp[j];
+                    } 
                 }
             }
         }
-        return dp[l1][l2];
+        return dp[l1];
     }
 }
