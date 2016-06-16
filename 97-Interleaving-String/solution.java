@@ -12,19 +12,14 @@ public class Solution {
         char[] v2 = s2.toCharArray();
         char[] v3 = s3.toCharArray();
         dp[0] = true;
-        for (int i = 0; i < l1; i++) {
-            dp[i + 1] = dp[i] && v1[i] == v3[i];
+        for (int j = 0; j < l1; j++) {
+            dp[j + 1] = dp[j] && v1[j] == v3[j];
         }
         for (int i = 0; i < l2; i++) {
-            dp[0] = dp[0] && v2[i] == v3[i];
+            dp[0] = dp[0] && v2[i] == v3[i];// initialize the first column in each row
             for (int j = 0; j < l1; j++) {
                 int index = i + j + 1;
                 dp[j + 1] = (dp[j] && v1[j] == v3[index]) || (dp[j + 1] && v2[i] == v3[index]);
-                // if (v1[j] != v3[index] && v2[i] != v3[index]) {
-                //     dp[j + 1] = false;
-                // } else if (v1[j] == v3[index]) {
-                //         dp[j + 1] = dp[j + 1] || dp[j];
-                // }
             }
         }
         return dp[l1];
