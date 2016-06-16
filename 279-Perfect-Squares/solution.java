@@ -1,26 +1,15 @@
 public class Solution {
     public int numSquares(int n) {
-        if (n == 0) {
-            return 0;
+        if(n==0) return 0;
+        for(int i=0; i*i<=n; i++){
+            int j=(int)Math.sqrt(n-i*i);
+            if(i*i+j*j==n){
+               if(i==0||j==0) return 1;
+               else return 2;
+            } 
         }
-        ArrayDeque<Integer> queue = new ArrayDeque<>();
-        queue.add(n);
-        int level = 0;
-        while(!queue.isEmpty()) {
-            level++;
-            int len = queue.size();
-            for (int i = 0; i < len; i++) {
-                int crt = queue.poll();
-                int sqrt = (int)Math.sqrt(crt);
-                for (int j = sqrt; j > 0; j--) {
-                    int next = crt - j * j;
-                    if (next == 0) {
-                        return level;
-                    }
-                    queue.add(next);
-                }
-            }
-        }
-        return -1;
+        while(n%4==0) n /= 4;
+        if(n%8==7) return 4;
+        return 3;
     }
 }
