@@ -4,6 +4,7 @@ public class Solution {
             return 0;
         }
         Queue<Integer> queue = new ArrayDeque<>();
+        Set<Integer> visited = new HashSet<>();
         queue.add(n);
         int level = 0;
         while(!queue.isEmpty()) {
@@ -17,7 +18,11 @@ public class Solution {
                     if (next == 0) {
                         return level;
                     }
-                    queue.add(next);
+                    if (!visited.contains(next)) {
+                        visited.add(next);
+                        queue.add(next);
+                    }
+                    
                 }
             }
         }
