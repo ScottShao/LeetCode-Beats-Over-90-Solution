@@ -1,10 +1,10 @@
 public class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<Integer>[] graph = new List[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            graph[i] = new ArrayList<Integer>();
-        }
         for (int [] p : prerequisites) {
+            if (graph[p[0]] == null) {
+                graph[p[0]] = new ArrayList<Integer>();
+            }
             graph[p[0]].add(p[1]);
         }
         boolean[] visited = new boolean[numCourses];
@@ -23,11 +23,13 @@ public class Solution {
         }
         visiting[start] = true;
         List<Integer> nextNodes = graph[start];
-        for (int node : nextNodes) {
-            if (!dfs(graph, node, visited, visiting, numCourses)) {
-                return false;
+        if (nextNodes != null) {
+            for (int node : nextNodes) {
+                if (!dfs(graph, node, visited, visiting, numCourses)) {
+                    return false;
+                }
+                visited[node] = true;
             }
-            visited[node] = true;
         }
         visited[start] = true;
         visiting[start] = false;
