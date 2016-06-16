@@ -3,14 +3,24 @@ public class Solution {
         if (n == 0) {
             return 0;
         }
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        for(int i = 0; i <= n; i++){
-            for(int j = 1; i + j * j <= n; j++){
-                dp[i  + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        queue.add(n);
+        int level = 0;
+        while(!queue.isEmpty()) {
+            level++;
+            int len = queue.size();
+            for (int i = 0; i < len; i++) {
+                int crt = queue.poll();
+                int sqrt = (int)Math.sqrt(crt);
+                for (int j = sqrt; j > 0; j--) {
+                    int next = crt - j * j;
+                    if (next == 0) {
+                        return level;
+                    }
+                    queue.add(next);
+                }
             }
-       }
-       return dp[n];
+        }
+        return -1;
     }
 }
