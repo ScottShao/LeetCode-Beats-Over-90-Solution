@@ -1,28 +1,26 @@
 public class Solution {
     public int numSquares(int n) {
-         ArrayDeque<Integer> queue = new ArrayDeque<Integer>();
+        if (n == 0) {
+            return 0;
+        }
+        Queue<Integer> queue = new ArrayDeque<>();
         queue.add(n);
-        int depth = 1, m = 1, tmp = 0;
-
-        while(true){
-            if(m == 0){
-                depth++;
-                m = tmp;
-                tmp = 0;
-            }
-
-            int cur = queue.remove();
-            m--;
-
-            int l = (int) Math.sqrt(cur);
-            for(int i=l; i>0; i--){
-                int sq = i*i;
-                int delta = cur - sq;
-                if(delta == 0)
-                    return depth;
-                queue.add(delta);
-                tmp++;
+        int level = 0;
+        while(!queue.isEmpty()) {
+            level++;
+            int len = queue.size();
+            for (int i = 0; i < len; i++) {
+                int crt = queue.poll();
+                int sqrt = (int)Math.sqrt(crt);
+                for (int j = sqrt; j > 0; j--) {
+                    int next = crt - j * j;
+                    if (next == 0) {
+                        return level;
+                    }
+                    queue.add(next);
+                }
             }
         }
+        return -1;
     }
 }
