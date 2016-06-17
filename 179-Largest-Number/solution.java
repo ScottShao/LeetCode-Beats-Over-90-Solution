@@ -3,7 +3,7 @@ public class Solution {
         if (nums == null || nums.length == 0) return "";
         String[] strs = new String[nums.length];
         for (int i = 0; i < nums.length; i++) {
-            strs[i] = Integer.toString(nums[i]);
+            strs[i] = String.valueOf(nums[i]);
         }
         
         Arrays.sort(strs, new Comparator<String>() {
