@@ -1,25 +1,42 @@
 public class Solution {
+    class NumWrapper {
+        int num;
+        long scale;
+        public NumWrapper(int num) {
+            scale = 1;
+            this.num = num;
+            int temp = num;
+            do {
+                temp /= 10;
+                scale *= 10;
+            } while (temp != 0);
+        }
+    }
     public String largestNumber(int[] nums) {
         if (nums == null || nums.length == 0) return "";
-        String[] strs = new String[nums.length];
+        NumWrapper[] wrappers = new NumWrapper[nums.length];
         for (int i = 0; i < nums.length; i++) {
-            strs[i] = Integer.toString(nums[i]);
+            wrappers[i] = new NumWrapper(nums[i]);
         }
         
-        Arrays.sort(strs, new Comparator<String>() {
+        Arrays.sort(wrappers, new Comparator<NumWrapper>() {
             @Override
-            public int compare(String i, String j) {
-                String s1 = i + j;
-                String s2 = j + i;
-                return s2.compareTo(s1);
+            public int compare(NumWrapper nw1, NumWrapper nw2) {
+                long n1 = nw1.num * nw2.scale + nw2.num;
+                long n2 = nw2.num * nw1.scale + nw1.num;
+                if (n2 > n1) {
+                    return 1;
+                } else {
+                    return -1;
+                }
             }
         });
-        if (strs[0].charAt(0) == '0') {
+        if (wrappers[0].num == 0) {
             return "0";
         }
         StringBuilder sb = new StringBuilder();
-        for (String str : strs) {
-            sb.append(str);
+        for (NumWrapper nw : wrappers) {
+            sb.append(nw.num);
         }
         return sb.toString();
     }
