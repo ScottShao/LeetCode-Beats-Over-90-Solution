@@ -4,7 +4,7 @@ public class Solution {
         int high = nums.length - 1;
         int index = nums.length - k;
         while (true) {
-            int pivot = nums[high];
+            int pivot = nums[low];
             int smallerNumIdx = low;
             int largerNumIdx = high;
             int crt = low;
