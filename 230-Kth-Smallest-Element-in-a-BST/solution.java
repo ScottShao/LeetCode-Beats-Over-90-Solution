@@ -10,21 +10,23 @@
 public class Solution {
     private int crt = 0;
     private int re = -1;
+    private int k;
     private boolean found = false;
     public int kthSmallest(TreeNode root, int k) {
-        inorder(root, k);
+        this.k = k;
+        inorder(root);
         return re;
     }
     
-    private void inorder(TreeNode root, int k) {
+    private void inorder(TreeNode root) {
         if (!found && root != null) {
-            inorder(root.left, k);
+            inorder(root.left);
             if (++crt == k) {
                 re = root.val;
                 found = true;
                 return;
             }
-            inorder(root.right, k);
+            inorder(root.right);
         }
     }
 }
