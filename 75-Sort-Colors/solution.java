@@ -6,12 +6,10 @@ public class Solution {
         int crt = 0;
         while (crt <= blueIdx) {
             if (nums[crt] == 2) {
-                swap(nums, crt, blueIdx);
-                blueIdx--;
+                swap(nums, crt, blueIdx--);
             } else {
                 if (nums[crt] == 0) {
-                    swap(nums, crt, redIdx);
-                    redIdx++;
+                    swap(nums, crt, redIdx++);
                 }
                 crt++;
             }
@@ -19,7 +17,6 @@ public class Solution {
     }
     
     private void swap(int[] nums, int i, int j) {
-        if (i == j) return;
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
