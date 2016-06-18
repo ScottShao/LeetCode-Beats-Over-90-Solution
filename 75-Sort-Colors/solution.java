@@ -1,8 +1,7 @@
 public class Solution {
     public void sortColors(int[] nums) {
-        int n = nums.length;
         int redIdx = 0;
-        int blueIdx = n - 1;
+        int blueIdx = nums.length - 1;
         int crt = 0;
         while (crt <= blueIdx) {
             if (nums[crt] == 2) {
