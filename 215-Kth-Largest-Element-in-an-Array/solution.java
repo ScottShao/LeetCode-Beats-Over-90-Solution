@@ -5,22 +5,25 @@ public class Solution {
         int index = nums.length - k;
         while (true) {
             if (low == high) return nums[low];
-            int pivot = nums[medianOf3(nums, low, high)];
+            int pivot = medianOf3(nums, low, high);
+            swap(nums, pivot, high);
             int smallerNumIdx = low;
-            int largerNumIdx = high;
             int crt = low;
-            while (crt <= largerNumIdx) {
-                if (nums[crt] < pivot) {
-                    swap(nums, crt++, smallerNumIdx++);
-                } else if (nums[crt] > pivot) {
-                    swap(nums, crt, largerNumIdx--);
-                } else {
-                    crt++;
+            while (crt < high) {
+                if (nums[crt] < nums[high]) {
+                    swap(nums, crt, smallerNumIdx++);
                 }
+                crt++;
             }
-            if (index > largerNumIdx) low = largerNumIdx + 1;
-            else if (index < smallerNumIdx) high = smallerNumIdx - 1;
-            else return pivot;
+            swap(nums, smallerNumIdx, high);
+            if (index == smallerNumIdx) {
+                return nums[index];
+            } else if (index < smallerNumIdx) {
+                high = smallerNumIdx - 1;
+            } else {
+                low = smallerNumIdx + 1;
+            }
+            
         }
     }
     
