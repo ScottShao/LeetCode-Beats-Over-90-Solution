@@ -5,8 +5,9 @@ public class Solution {
         }
         StringBuilder sb = new StringBuilder();
         while (n > 0) {
-            int rem = (n - 1) % 26;
-            n = (n - 1) / 26;
+            n--;
+            int rem = n % 26;
+            n = n / 26;
             sb.append((char)('A' + rem));
         }
         return sb.reverse().toString();
