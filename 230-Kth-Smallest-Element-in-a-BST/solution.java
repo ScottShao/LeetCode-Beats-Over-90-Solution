@@ -8,25 +8,23 @@
  * }
  */
 public class Solution {
+    private int crt = 0;
+    private int re = -1;
     public int kthSmallest(TreeNode root, int k) {
-        if (root == null) {
-            return -1;
+        inorder(root, k);
+        return re;
+    }
+    
+    private void inorder(TreeNode root, int k) {
+        if (root == null || crt == k) {
+            return;
         }
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode crt = root;
-        while (!stack.isEmpty() || crt != null) {
-            if (crt != null) {
-                stack.push(crt);
-                crt = crt.left;
-            } else {
-                crt = stack.pop();
-                k--;
-                if (k == 0) {
-                    return crt.val;
-                }
-                crt = crt.right;
-            }
+        inorder(root.left, k);
+        
+        if (++crt == k) {
+            re = root.val;
+            return;
         }
-        return -1;
+        inorder(root.right, k);
     }
 }
