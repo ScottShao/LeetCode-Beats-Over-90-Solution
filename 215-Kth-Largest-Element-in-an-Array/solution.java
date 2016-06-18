@@ -4,6 +4,7 @@ public class Solution {
         int high = nums.length - 1;
         int index = nums.length - k;
         while (true) {
+            if (low == high) return nums[low];
             int pivot = nums[medianOf3(nums, low, high)];
             int smallerNumIdx = low;
             int largerNumIdx = high;
