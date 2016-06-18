@@ -11,27 +11,25 @@ public class Solution {
     int counter = 0, k;
     int rt = 0;
 
-    public void recur( TreeNode root ) {
-        if ( counter == k || root == null )
+    public void inorder(TreeNode root) {
+        if (counter == k || root == null)
             return;
 
-        if ( root.left != null )
-            recur( root.left );
+        if (root.left != null)
+            inorder( root.left);
 
-        if ( counter != k ) {
+        if (counter != k) {
             rt = root.val;
             counter++;
         }
 
-        if ( root.right != null )
-            recur( root.right );
+        if (root.right != null)
+            inorder(root.right);
     }
 
     public int kthSmallest(TreeNode root, int k) {
-
         this.k = k;
-        recur( root );
-
+        inorder(root);
         return rt;
     }
 }
