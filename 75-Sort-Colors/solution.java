@@ -6,10 +6,12 @@ public class Solution {
         while (crt <= blueIdx) {
             if (nums[crt] == 0) {
                 swap(nums, crt, redIdx++);
-            }else if (nums[crt] == 2){
-                swap(nums, crt--, blueIdx--);
+                crt++;
+            } else if (nums[crt] == 2){
+                swap(nums, crt, blueIdx--);
+            } else {
+                crt++;
             }
-            crt++;
         }
     }
     
