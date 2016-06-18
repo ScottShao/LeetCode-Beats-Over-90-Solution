@@ -8,30 +8,25 @@
  * }
  */
 public class Solution {
-    int counter = 0, k;
-    int rt = 0;
-
-    public void recur( TreeNode root ) {
-        if ( counter == k || root == null )
-            return;
-
-        if ( root.left != null )
-            recur( root.left );
-
-        if ( counter != k ) {
-            rt = root.val;
-            counter++;
-        }
-
-        if ( root.right != null )
-            recur( root.right );
-    }
-
+    private int crt = 0;
+    private int re = -1;
+    private int k;
+    private boolean found = false;
     public int kthSmallest(TreeNode root, int k) {
-
         this.k = k;
-        recur( root );
-
-        return rt;
+        inorder(root);
+        return re;
+    }
+    
+    private void inorder(TreeNode root) {
+        if (!found && root != null) {
+            inorder(root.left);
+            if (++crt == k) {
+                re = root.val;
+                found = true;
+                return;
+            }
+            inorder(root.right);
+        }
     }
 }
