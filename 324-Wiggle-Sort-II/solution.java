@@ -1,21 +1,26 @@
 public class Solution {
-     public void wiggleSort(int[] nums) {
-        int medium = findMedium(nums, 0, nums.length - 1, (nums.length + 1) >> 1);
-        int s = 0, t = nums.length - 1 , mid_index = (nums.length + 1) >> 1;
-        int[] temp = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < medium)
-                temp[s++] = nums[i];
-            else if (nums[i] > medium)
-                temp[t--] = nums[i];
+    
+    public void wiggleSort(int[] nums) {
+        int n = nums.length;
+        int left = 0, i = 0, right = n - 1;
+        int median = findMedium(nums, 0, n - 1, (n + 1) >> 1);
+        while (i <= right) {
+            if (nums[newIndex(i,n)] > median) {
+                swap(nums, newIndex(left++,n), newIndex(i++,n));
+            }
+            else if (nums[newIndex(i,n)] < median) {
+                swap(nums, newIndex(right--,n), newIndex(i,n));
+            }
+            else {
+                i++;
+            }
         }
- 
-        while (s < mid_index) temp[s++] = medium;
-        while (t >= mid_index) temp[t--] = medium;
- 
-        t = nums.length;
-        for (int i = 0; i < nums.length; i++)
-            nums[i] = (i & 1) == 0 ? temp[--s] : temp[--t];
+
+
+    }
+
+    private int newIndex(int index, int n) {
+        return (1 + 2*index) % (n | 1);
     }
  
     private int findMedium(int[] nums, int L, int R, int k) {
