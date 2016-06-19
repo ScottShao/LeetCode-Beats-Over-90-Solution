@@ -11,9 +11,11 @@ public class Solution {
         for (int i = 1; i < numRows; i++) {
             List<Integer> prev = results.get(i - 1);
             List<Integer> crt = new ArrayList<>();
-            for (int j = 0; j < i + 1; j++) {
-                crt.add((j < i ? prev.get(j) : 0) + (j > 0? prev.get(j - 1) : 0));
+            crt.add(1);
+            for (int j = 1; j < i; j++) {
+                crt.add(prev.get(j) + prev.get(j - 1));
             }
+            crt.add(1);
             results.add(crt);
         }
         return results;
