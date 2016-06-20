@@ -3,7 +3,6 @@ public class Solution {
         int n = secret.length();
         int bulls = 0;
         int cows = 0;
-        if (n != 0) {
             int[] counts = new int[10];
             char[] sVal = secret.toCharArray();
             for (char ch : sVal) {
@@ -24,7 +23,6 @@ public class Solution {
                     bulls++;
                 }
             }
-        }
         return bulls + "A" + cows + "B";
     }
 }
