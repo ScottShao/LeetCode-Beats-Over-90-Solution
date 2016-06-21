@@ -14,6 +14,9 @@ public class Solution {
             if (nums[i] * 4 > target) {
                 break;
             }
+            if (nums[i] + 3 * nums[n - 1] < target) {
+                continue;
+            }
             prev = nums[i];
             int prev2 = Integer.MAX_VALUE;
             int dif = target - nums[i];
@@ -23,6 +26,9 @@ public class Solution {
                 }
                 if (nums[j] * 3 > dif) {
                     break;
+                }
+                if (nums[j] + nums[n - 1] * 2 < dif) {
+                    continue;
                 }
                 prev2 = nums[j];
                 int newDif = dif - nums[j];
