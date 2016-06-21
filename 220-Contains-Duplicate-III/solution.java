@@ -18,7 +18,7 @@ public class Solution {
 
         double temp = t;
         temp++;
-
+        
         int length = (int)Math.ceil(((double)max-min)/temp) + 1;
         int[][] table = new int[3][length];
 
