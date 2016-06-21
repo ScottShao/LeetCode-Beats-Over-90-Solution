@@ -4,8 +4,9 @@ public class Solution {
         int length = pattern.length();
         if(strs.length != length) return false;
         Map<String,Integer> map = new HashMap<String,Integer>();
+        char[] val = pattern.toCharArray();
         for(Integer i = 0;i<length;i++){
-            if(map.put(pattern.charAt(i)+"*",i) != map.put(strs[i],i)){
+            if(map.put(val[i] + "*",i) != map.put(strs[i],i)){
                 return false;
             }
         }
