@@ -1,29 +1,40 @@
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
             return false;
         }
+       
         return searchMatrix(matrix, target, 0, 0, matrix.length - 1, matrix[0].length - 1);
     }
     
-    public boolean searchMatrix(int[][] matrix, int target, int i, int j, int n, int m) {
-        if (i > n || j > m) return false;
-        if (target > matrix[n][m]) return false;
-        if (target < matrix[i][j]) return false;
-        int low = 0;
-        int high = Math.min(n - i, m - j);
-        while (low < high) {
-            int mid = low + ((high - low + 1) >>> 1);
-            int iIdx = i + mid;
-            int jIdx = j + mid;
-            if (matrix[iIdx][jIdx] > target) {
-                high = mid - 1;
-            } else if (matrix[iIdx][jIdx] < target) {
-                low = mid;
-            } else {
+    private boolean searchMatrix(int[][] matrix, int target, int rowIdx, int colIdx, int rows, int cols) {
+        
+        if (rowIdx > rows || colIdx > cols || matrix[rowIdx][colIdx] > target) {
+            return false;
+        } else if (matrix[rowIdx][colIdx] == target) {
+            return true;
+        }
+        int prevRow = rowIdx;
+        int prevCol = colIdx;
+        int midRow = rowIdx;
+        int midCol = colIdx;
+        int rb = rows;
+        int cb = cols;
+        while (rowIdx < rows && colIdx < cols) {
+            midRow = rowIdx + ((rows - rowIdx + 1) >>> 1);
+            midCol = colIdx + ((cols - colIdx + 1) >>> 1);
+            if (matrix[midRow][midCol] < target) {
+                rowIdx = midRow;
+                colIdx = midCol;
+            } else if(matrix[midRow][midCol] > target) {
+                rows = midRow - 1;
+                cols = midCol - 1;
+            } else{
                 return true;
             }
         }
-        return matrix[i + low][j + low] == target || searchMatrix(matrix, target, i, j + low + 1, i + low, m) || searchMatrix(matrix, target, i + low + 1, j, n, j + low);
-    }
+        
+        return searchMatrix(matrix, target, prevRow, colIdx + 1, rowIdx + 1 > rb?rb:rowIdx+1, cb) || searchMatrix(matrix, target, rowIdx + 1, prevCol, rb, colIdx + 1 > cb?cb:colIdx+1);
+        
+    } 
 }
