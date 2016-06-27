@@ -10,19 +10,16 @@
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> results = new ArrayList<>();
-        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
-        TreeNode crt = root;
-        while (!stack.isEmpty() || crt != null) {
-            if (crt == null) {
-                crt = stack.pop();
-            } else {
-                results.add(crt.val);
-                if (crt.right != null) {
-                    stack.push(crt.right);
-                }
-                crt = crt.left;
-            }
-        }
+        preorderTraversal(root, results);
         return results;
+    }
+    
+    private void preorderTraversal(TreeNode root, List<Integer> results) {
+        if (root == null) {
+            return;
+        }
+        results.add(root.val);
+        preorderTraversal(root.left, results);
+        preorderTraversal(root.right, results);
     }
 }
