@@ -10,18 +10,16 @@
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> results = new ArrayList<>();
-        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
-        TreeNode crt = root;
-        while (!stack.isEmpty() || crt != null) {
-            if (crt != null) {
-                stack.push(crt);
-                crt = crt.left;
-            } else {
-                crt = stack.pop();
-                results.add(crt.val);
-                crt = crt.right;
-            }
-        }
+        traversal(root, results);
         return results;
+    }
+    
+    private void traversal(TreeNode root, List<Integer> results) {
+        if (root == null) {
+            return;
+        }
+        traversal(root.left, results);
+        results.add(root.val);
+        traversal(root.right, results);
     }
 }
