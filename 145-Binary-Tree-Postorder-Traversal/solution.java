@@ -9,7 +9,7 @@
  */
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        ArrayDeque<Integer> results = new ArrayDeque<>();
+        LinkedList<Integer> results = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode crt = root;
         while (!stack.isEmpty() || crt != null) {
@@ -22,10 +22,7 @@ public class Solution {
                 crt = crt.left;
             }
         }
-        List<Integer> re = new ArrayList<>(results.size());
-        for (int val : results) {
-            re.add(val);
-        }
-        return re;
+
+        return results;
     }
 }
