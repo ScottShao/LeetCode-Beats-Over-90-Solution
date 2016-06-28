@@ -23,8 +23,7 @@ public class Solution {
             if (wordDict.contains(temp)) {
                 if (!notQualified.contains(i + 1)) {
                     sb.append(temp).append(" ");
-                    boolean isFound = dfs(vals, i + 1, maxLen, sb, wordDict, notQualified, results);
-                    isPathFound = isPathFound || isFound;
+                    isPathFound = dfs(vals, i + 1, maxLen, sb, wordDict, notQualified, results) || isPathFound;
                     sb.setLength(sbLen);
                 }
             }
