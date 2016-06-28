@@ -20,14 +20,13 @@ public class Solution {
             if (wordDict.contains(temp)) {
                 if (!notQualified.contains(i + 1)) {
                     List<String> next = dfs(vals, i + 1, maxLen, wordDict, notQualified, wordsMap);
-                    if (next == null || next.size() > 0) {
+                    if (next == null) {
                         isPathFound = true;
-                        if (next == null) {
-                            found.add(temp);
-                        } else {
-                            for (String n : next) {
-                                found.add(temp + " " + n);
-                            }
+                        found.add(temp);
+                    } else if (next.size() > 0){
+                        isPathFound = true;
+                        for (String n : next) {
+                            found.add(temp + " " + n);
                         }
                     }
                     
