@@ -11,30 +11,42 @@ public class Solution {
         if (lists == null || lists.length == 0) {
             return null;
         }
-        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
-            public int compare(ListNode l1, ListNode l2) {
-                if (l1.val < l2.val) {
-                    return -1;
-                } else {
-                    return 1;
-                }
+        int len = lists.length;
+        while (len > 1) {
+            for (int i = 0, half = len / 2; i < half; i++) {
+                lists[i] = mergeTwoLists(lists[i], lists[len - i - 1]);
             }
-        });
-        for (ListNode ln : lists) {
-            if (ln != null) {
-                pq.add(ln);
-            }
+            len = (len + 1) >>> 1;
         }
-        ListNode dummy = new ListNode(0);
+        return lists[0];
+    }
+    
+    private ListNode mergeTwoLists(ListNode first, ListNode second) {
+        if (first == null) {
+            return second;
+        }
+        if (second == null) {
+            return first;
+        }
+        ListNode dummy = new ListNode(-1);
         ListNode crt = dummy;
-        while (!pq.isEmpty()) {
-            ListNode temp = pq.poll();
-            crt.next = temp;
-            if (temp.next != null) {
-                pq.add(temp.next);
+        while (first != null && second != null) {
+            if (first.val < second.val) {
+                crt.next = first;
+                first = first.next;
+            } else {
+                crt.next = second;
+                second = second.next;
             }
             crt = crt.next;
         }
+        
+        if (first == null) {
+            crt.next = second;
+        } else {
+            crt.next = first;
+        }
+        
         return dummy.next;
     }
 }
