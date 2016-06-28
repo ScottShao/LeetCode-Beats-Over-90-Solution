@@ -8,36 +8,20 @@
  */
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if (node == null) {
-            return node;
+        if (node == null) return null;
+        Map<Integer, UndirectedGraphNode> map = new HashMap<>();
+        return dfs(node, map);
+    }
+
+    private UndirectedGraphNode dfs(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map) {
+        UndirectedGraphNode res = new UndirectedGraphNode(node.label);
+        map.put(node.label, res);
+        for (UndirectedGraphNode n : node.neighbors) {
+            UndirectedGraphNode nb = map.get(n.label);
+            if (nb == null)
+                nb = dfs(n, map);
+            res.neighbors.add(nb);
         }
-        Map<Integer, UndirectedGraphNode> labelToNode = new HashMap<>();
-        ArrayDeque<UndirectedGraphNode> queue = new ArrayDeque<>();
-        Set<UndirectedGraphNode> visited = new HashSet<>();
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            UndirectedGraphNode crt = queue.poll();
-            visited.add(crt);
-            UndirectedGraphNode clonedNode = labelToNode.get(crt.label);
-            if (clonedNode == null) {
-                clonedNode = new UndirectedGraphNode(crt.label);
-                labelToNode.put(crt.label, clonedNode);
-            }
-            for (UndirectedGraphNode un : crt.neighbors) {
-                UndirectedGraphNode newNode = labelToNode.get(un.label);
-                if (newNode == null) {
-                    newNode = new UndirectedGraphNode(un.label);
-                    labelToNode.put(un.label, newNode);
-                }
-                
-                clonedNode.neighbors.add(newNode);
-                if (!visited.contains(un)) {
-                    queue.add(un);
-                    visited.add(un);
-                }
-            }
-            
-        }
-        return labelToNode.get(node.label);
+        return res;
     }
 }
