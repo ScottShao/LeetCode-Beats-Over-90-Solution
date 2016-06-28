@@ -28,9 +28,10 @@ public class Solution {
         ListNode dummy = new ListNode(0);
         ListNode crt = dummy;
         while (!pq.isEmpty()) {
-            crt.next = pq.poll();
-            if (crt.next.next != null) {
-                pq.add(crt.next.next);
+            ListNode temp = pq.poll();
+            crt.next = temp;
+            if (temp.next != null) {
+                pq.add(temp.next);
             }
             crt = crt.next;
         }
