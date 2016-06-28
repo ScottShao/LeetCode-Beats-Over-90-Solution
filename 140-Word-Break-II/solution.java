@@ -7,12 +7,11 @@ public class Solution {
         char[] vals = s.toCharArray();
         int maxLen = 0;
         for (String word : wordDict) maxLen = Math.max(maxLen, word.length());
-        Map<Integer, List<String>> wordsMap = new HashMap<>();
-        dfs(vals, 0, maxLen, new StringBuilder(), wordDict, wordsMap, new HashSet<>(), results);
+        dfs(vals, 0, maxLen, new StringBuilder(), wordDict, new HashSet<>(), results);
         return results;
     }
     
-    private boolean dfs(char[] vals, int index, int maxLen, StringBuilder sb, Set<String> wordDict, Map<Integer, List<String>> wordsMap, Set<Integer> notQualified, List<String> results) {
+    private boolean dfs(char[] vals, int index, int maxLen, StringBuilder sb, Set<String> wordDict, Set<Integer> notQualified, List<String> results) {
         if (index >= vals.length) {
             results.add(sb.toString().trim());
             return true;
@@ -24,7 +23,7 @@ public class Solution {
             if (wordDict.contains(temp)) {
                 if (!notQualified.contains(i + 1)) {
                     sb.append(temp).append(" ");
-                    boolean isFound = dfs(vals, i + 1, maxLen, sb, wordDict, wordsMap, notQualified, results);
+                    boolean isFound = dfs(vals, i + 1, maxLen, sb, wordDict, notQualified, results);
                     isPathFound = isPathFound || isFound;
                     sb.setLength(sbLen);
                 }
