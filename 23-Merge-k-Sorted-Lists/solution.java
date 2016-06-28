@@ -14,7 +14,7 @@ public class Solution {
         int len = lists.length;
         while (len > 1) {
             int last = len - 1;
-            for (int i = 0, half = len / 2; i < half; i++) {
+            for (int i = 0; i < len / 2; i++) {
                 lists[i] = mergeTwoLists(lists[i], lists[last - i]);
             }
             len = (len + 1) >>> 1;
