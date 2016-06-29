@@ -1,40 +1,39 @@
 public class NumArray {
-    int[] nums;
-    int[] BIT;
-    int n;
-
+    private int[] b;
+    private int len;
+    private int[] nums;
+    
     public NumArray(int[] nums) {
         this.nums = nums;
-
-        n = nums.length;
-        BIT = new int[n + 1];
-        for (int i = 0; i < n; i++)
-            init(i + 1, nums[i]);
+        double l = Math.sqrt(nums.length);
+        len = (int) Math.ceil(nums.length/l);
+        b = new int [len];
+        for (int i = 0; i < nums.length; i++)
+            b[i / len] += nums[i];
     }
-
-    public void init(int i, int val) {
-        while (i <= n) {
-            BIT[i] += val;
-            i += (i & -i);
-        }
-    }
-
-    void update(int i, int val) {
-        init(i + 1, val - nums[i]);
-        nums[i] = val;
-    }
-
-    public int getSum(int i) {
+    
+    public int sumRange(int i, int j) {
         int sum = 0;
-        while (i > 0) {
-            sum += BIT[i];
-            i -= (i & -i);
+        int startBlock = i / len;
+        int endBlock = j / len;
+        if (startBlock == endBlock) {
+            for (int k = i; k <= j; k++)
+                sum += nums[k];
+        } else {
+            for (int k = i; k <= (startBlock + 1) * len - 1; k++)
+                sum += nums[k];
+            for (int k = startBlock + 1; k <= endBlock - 1; k++)
+                sum += b[k];
+            for (int k = endBlock * len; k <= j; k++)
+                sum += nums[k];
         }
         return sum;
     }
-
-    public int sumRange(int i, int j) {
-        return getSum(j + 1) - getSum(i);
+    
+    public void update(int i, int val) {
+        int b_l = i / len;
+        b[b_l] = b[b_l] - nums[i] + val;
+        nums[i] = val;
     }
 }
 
