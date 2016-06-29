@@ -2,19 +2,16 @@ public class Solution {
     public int countNumbersWithUniqueDigits(int n) {
         if (n == 0) {
             return 1;
-        } else if (n == 1) {
-            return 10;
-        } else if (n >= 10) {
-            return 8877691;
         }
-        int result = 9;
-        int k = 9;
-        int temp = n - 1;
-        while (temp > 0) {
-            result *= k;
-            k--;
-            temp--;
+
+        int res = 10;
+        int uniqueDigits = 9;
+        int availableNumber = 9;
+        while (n-- > 1 && availableNumber > 0) {
+            uniqueDigits = uniqueDigits * availableNumber;
+            res += uniqueDigits;
+            availableNumber--;
         }
-        return result + countNumbersWithUniqueDigits(n - 1);
+        return res;
     }
 }
