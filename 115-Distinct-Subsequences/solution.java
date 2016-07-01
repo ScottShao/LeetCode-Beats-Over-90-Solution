@@ -11,7 +11,7 @@ public class Solution {
             int prev = dp[0];
             for (int j = 1; j <= min; j++) {
                 int temp = dp[j];
-                dp[j] = dp[j] + ((sVals[i - 1] == tVals[j - 1]) ? prev : 0);
+                dp[j] += ((sVals[i - 1] == tVals[j - 1]) ? prev : 0);
                 prev = temp;
             }
         }
