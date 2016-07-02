@@ -1,16 +1,20 @@
 public class Solution {
     public int minCut(String s) {
-        int n = s.length();
-        boolean[][] tab = new boolean[n][n];
-        int[] min = new int[n];
-        char[] vals = s.toCharArray();
-        for (int i = n - 1; i >= 0; i--) {
-            min[i] = n - i - 1;
-            for (int j = i; j < n; j++) {
-                tab[i][j] = vals[i] == vals[j] && (j - i < 2 || tab[i + 1][j - 1]);
-                if (tab[i][j]) min[i] = Math.min(min[i], j + 1 < n ? (1 + min[j + 1]) : 0);
+        char[] c = s.toCharArray();
+        int n = c.length;
+        int[] cut = new int[n];
+        boolean[][] pal = new boolean[n][n];
+    
+        for(int i = 0; i < n; i++) {
+            int min = i;
+            for(int j = 0; j <= i; j++) {
+                if(c[j] == c[i] && (j + 1 > i - 1 || pal[j + 1][i - 1])) {
+                    pal[j][i] = true;  
+                    min = j == 0 ? 0 : Math.min(min, cut[j - 1] + 1);
+                }
             }
+            cut[i] = min;
         }
-        return min[0];
+        return cut[n - 1];
     }
 }
