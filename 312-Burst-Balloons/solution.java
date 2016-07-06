@@ -2,7 +2,7 @@ public class Solution {
     public int maxCoins(int[] iNums) {
         int[] nums = new int[iNums.length + 2];
         int n = 1;
-        for (int x : iNums) if (x > 0) nums[n++] = x;
+        for (int x : iNums)  nums[n++] = x;
         nums[0] = nums[n++] = 1;
     
     
