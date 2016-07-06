@@ -1,9 +1,10 @@
 public class Solution {
     public int maxCoins(int[] iNums) {
-        int[] nums = new int[iNums.length + 2];
-        int n = 1;
-        for (int x : iNums)  nums[n++] = x;
-        nums[0] = nums[n++] = 1;
+        int n = iNums.length + 2;
+        int[] nums = new int[n];
+        int i = 1;
+        for (int x : iNums) nums[i++] = x;
+        nums[0] = nums[n - 1] = 1;
     
     
         int[][] memo = new int[n][n];
