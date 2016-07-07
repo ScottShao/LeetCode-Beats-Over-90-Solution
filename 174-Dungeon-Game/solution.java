@@ -5,14 +5,24 @@ public class Solution {
         }
         int m = dungeon.length;
         int n = dungeon[0].length;
-        int[] health = new int[n + 1];
+        int low;
+        int high;
+        if (m < n) {
+            low = m;
+            high = n;
+        } else {
+            low = n;
+            high = m;
+        }
+        int[] health = new int[low + 1];
         Arrays.fill(health, Integer.MAX_VALUE);
-        health[n] = 1;
-        for (int i = m - 1; i >= 0; i--) {
-            for (int j = n - 1; j >= 0; j--) {
-                health[j] = Math.max(Math.min(health[j], health[j + 1]) - dungeon[i][j], 1);
+        health[low] = 1;
+        for (int i = high - 1; i >= 0; i--) {
+            for (int j = low - 1; j >= 0; j--) {
+                int temp = m < n ? dungeon[j][i] : dungeon[i][j];
+                health[j] = Math.max(Math.min(health[j], health[j + 1]) - temp, 1);
             }
-            health[n] = Integer.MAX_VALUE;
+            health[low] = Integer.MAX_VALUE;
         }
         return health[0];
     }
