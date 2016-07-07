@@ -5,20 +5,15 @@ public class Solution {
         }
         int m = dungeon.length;
         int n = dungeon[0].length;
-        int[][] health = new int[m][n];
+        int[] health = new int[n + 1];
+        Arrays.fill(health, Integer.MAX_VALUE);
+        health[n] = 1;
         for (int i = m - 1; i >= 0; i--) {
             for (int j = n - 1; j >= 0; j--) {
-                if (i == m - 1 && j == n - 1) {
-                    health[i][j] = Math.max(1, 1 - dungeon[i][j]);
-                } else if (i == m - 1) {
-                    health[i][j] = Math.max(health[i][j + 1] - dungeon[i][j], 1);
-                } else if (j == n - 1) {
-                    health[i][j] = Math.max(health[i + 1][j] - dungeon[i][j], 1);
-                } else {
-                    health[i][j] = Math.max(Math.min(health[i + 1][j], health[i][j + 1]) - dungeon[i][j], 1);
-                }
+                health[j] = Math.max(Math.min(health[j], health[j + 1]) - dungeon[i][j], 1);
             }
+            health[n] = Integer.MAX_VALUE;
         }
-        return health[0][0];
+        return health[0];
     }
 }
