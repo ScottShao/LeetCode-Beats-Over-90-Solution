@@ -8,47 +8,34 @@
  * }
  */
 public class Solution {
-    public List<TreeNode> generateTrees(int n) {
+    public static List<TreeNode> generateTrees(int n) {
         if (n == 0) return new ArrayList<>();
-        return generateTrees(1, n);
-    }
-    
-    private List<TreeNode> generateTrees(int left, int right) {
-        if (left > right) {
-            return null;
-        } else if (left == right) {
-            List<TreeNode> re = new ArrayList<>();
-            re.add(new TreeNode(left));
-            return re;
-        } else {
-            List<TreeNode> re = new ArrayList<>();
-            for (int i = left; i <= right; i++) {
-                List<TreeNode> leftList = generateTrees(left, i - 1);
-                List<TreeNode> rightList = generateTrees(i + 1, right);
-                if (leftList != null && rightList != null) {
-                    for (TreeNode l : leftList) {
-                        for (TreeNode r : rightList) {
-                            TreeNode root = new TreeNode(i);
-                            root.left = l;
-                            root.right = r;
-                            re.add(root);
-                        }
-                    }
-                } else if (leftList == null){
-                    for (TreeNode r : rightList) {
-                        TreeNode root = new TreeNode(i);
-                        root.right = r;
-                        re.add(root);
-                    }
-                } else {
-                    for (TreeNode l : leftList) {
-                        TreeNode root = new TreeNode(i);
-                        root.left = l;
-                        re.add(root);
-                    }
-                }
-            }
-            return re;
-        }
-    }
+		List<TreeNode>[] result = new List[n+1];
+		result[0] = new ArrayList<TreeNode>();
+		result[0].add(null);
+
+		for(int len = 1; len <= n; len++){
+			result[len] = new ArrayList<TreeNode>();
+			for(int j=0; j<len; j++){
+				for(TreeNode nodeL : result[j]){
+					for(TreeNode nodeR : result[len-j-1]){
+						TreeNode node = new TreeNode(j+1);
+						node.left = nodeL;
+						node.right = clone(nodeR, j+1);
+						result[len].add(node);
+					}
+				}
+			}
+		}
+		return result[n];
+	}
+	
+	private static TreeNode clone(TreeNode n, int offset){
+		if(n == null)
+			return null;
+		TreeNode node = new TreeNode(n.val + offset);
+		node.left = clone(n.left, offset);
+		node.right = clone(n.right, offset);
+		return node;
+	}
 }
