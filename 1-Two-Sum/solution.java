@@ -1,28 +1,19 @@
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
-        if (nums == null || nums.length < 2) {
-            return null;
+        int n = nums.length;
+        for(int i = 0; i < n; i++) 
+             nums[i] = nums[i] * n + (nums[i] < 0 ? -i : i);
+        
+        Arrays.sort(nums);
+        
+        int lo = 0, hi = n - 1;
+        
+        while (lo < hi) {
+            int sum = nums[lo]/n + nums[hi]/n;
+            if (sum == target) return new int[]{nums[lo] < 0 ? -nums[lo] % n : nums[lo] % n, nums[hi] < 0 ? -nums[hi] % n : nums[hi] % n};
+            if (sum < target)   lo++;
+            else                hi--;
         }
-        int len = nums.length;
-        int[] re = new int[2];
-        Map<Integer, Integer> numMap = new HashMap<>();
-        for (int i = 0; i < len; i++) {
-            Integer old = numMap.put(nums[i], i);
-            if (old != null && nums[i] * 2 == target) {
-                re[0] = old;
-                re[1] = i;
-                return re;
-            }
-        }
-        for (int i = 0; i < len; i++) {
-            int temp = target - nums[i];
-            Integer idx = numMap.get(temp);
-            if (idx != null && idx != i) {
-                re[0] = idx;
-                re[1] = i;
-                break;
-            }
-        }
-        return re;
+        throw new IllegalArgumentException();
     }
 }
