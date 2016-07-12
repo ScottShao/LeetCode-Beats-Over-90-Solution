@@ -4,17 +4,16 @@ public class Solution {
         int n = s.length();
         char[] vals = s.toCharArray();
         int[] count = new int[256];
-        Arrays.fill(count, -1);
         int maxLen = 0;
         int low = 0;
         int high = 0;
         for (; high < n; high++) {
-            if (count[vals[high]] == -1 || count[vals[high]] < low) {
-                count[vals[high]] = high;
+            if (count[vals[high]] == 0 || count[vals[high]] < low) {
+                count[vals[high]] = high + 1;
             } else {
                 maxLen = Math.max(maxLen, high - low);
-                low = count[vals[high]] + 1;
-                count[vals[high]] = high;
+                low = count[vals[high]];
+                count[vals[high]] = high + 1;
             }
         }
         return Math.max(maxLen, high - low);
