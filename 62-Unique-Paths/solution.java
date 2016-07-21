@@ -1,15 +1,15 @@
 public class Solution {
     public int uniquePaths(int m, int n) {
-        int[][] grid = new int[m][n];
-        for(int i = 0; i<m; i++){
-            for(int j = 0; j<n; j++){
-                if(i==0||j==0)
-                    grid[i][j] = 1;
-                else
-                    grid[i][j] = grid[i][j-1] + grid[i-1][j];
-            }
-        }
-        return grid[m-1][n-1];
+        int N = n + m - 2;// how much steps we need to do
+        int k = m - 1; // number of steps that need to go down
+        double res = 1;
+        // here we calculate the total possible path number 
+        // Combination(N, k) = n! / (k!(n - k)!)
+        // reduce the numerator and denominator and get
+        // C = ( (n - k + 1) * (n - k + 2) * ... * n ) / k!
+        for (int i = 1; i <= k; i++)
+            res = res * (N - k + i) / i;
+        return (int)res;
     }
     
 }
