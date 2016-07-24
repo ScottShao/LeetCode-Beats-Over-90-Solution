@@ -5,10 +5,11 @@ public class Solution {
         int max = 0;
         int[] d = new int[n];
         d[n - 1] = 0;
+        char[] vals = s.toCharArray();
         for (int i = n - 2; i >= 0; i--) {
-            if (s.charAt(i) == '(') {
+            if (vals[i] == '(') {
                 int j = i + 1 + d[i + 1];
-                if (j < n && s.charAt(j) == ')') {
+                if (j < n && vals[j] == ')') {
                     d[i] = d[i + 1] + 2;
                     if (j + 1 < n)
                         d[i] += d[j + 1];
