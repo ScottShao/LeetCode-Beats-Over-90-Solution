@@ -4,20 +4,24 @@ public class Solution {
         char[] w2 = word2.toCharArray();
         int m = w1.length;
         int n = w2.length;
-        int[][] dis = new int[m + 1][n + 1];
+        int[] dis = new int[n + 1];
         for (int j = 0; j <= n; j++) {
-            dis[0][j] = j;
+            dis[j] = j;
         }
+        int prev = 0;
         for (int i = 0; i < m; i++) {
-            dis[i + 1][0] = i + 1;
+            dis[0] = i + 1;
+            prev = i;
             for (int j = 0; j < n; j++) {
+                int temp = dis[j + 1];
                 if (w1[i] == w2[j]) {
-                    dis[i + 1][j + 1] = Math.min(dis[i][j], Math.min(dis[i + 1][j], dis[i][j + 1]) + 1);
+                    dis[j + 1] = Math.min(prev, Math.min(dis[j], dis[j + 1]) + 1);
                 } else {
-                    dis[i + 1][j + 1] = Math.min(dis[i][j], Math.min(dis[i + 1][j], dis[i][j + 1])) + 1;
+                    dis[j + 1] = Math.min(prev, Math.min(dis[j], dis[j + 1])) + 1;
                 }
+                prev = temp;
             }
         }
-        return dis[m][n];
+        return dis[n];
     }
 }
