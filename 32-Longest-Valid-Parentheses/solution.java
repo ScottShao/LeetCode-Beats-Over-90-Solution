@@ -1,24 +1,20 @@
 public class Solution {
     public int longestValidParentheses(String s) {
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
-        char[] vals = s.toCharArray();
-        int start = -1;
+        int n = s.length();
+        if (n < 2) return 0;
         int max = 0;
-        for (int i = 0; i < vals.length; i++) {
-            if (vals[i] == '(') {
-                stack.push(i);
-            } else {
-                if (stack.isEmpty()) {
-                    start = i;
-                } else {
-                    stack.pop();
-                    if (stack.isEmpty()) {
-                        max = Math.max(i - start, max);
-                    } else {
-                        max = Math.max(i - stack.peek(), max);
-                    }
+        int[] d = new int[n];
+        d[n - 1] = 0;
+        for (int i = n - 2; i >= 0; i--) {
+            if (s.charAt(i) == '(') {
+                int j = i + 1 + d[i + 1];
+                if (j < n && s.charAt(j) == ')') {
+                    d[i] = d[i + 1] + 2;
+                    if (j + 1 < n)
+                        d[i] += d[j + 1];
                 }
             }
+            max = Math.max(max, d[i]);
         }
         return max;
     }
