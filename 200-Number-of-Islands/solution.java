@@ -54,16 +54,8 @@ public int numIslands(char[][] grid) {
                 q = p - n;
                 uf.union(p, q);
             }
-            if(i < m - 1 && grid[i + 1][j] == '1') {
-                q = p + n;
-                uf.union(p, q);
-            }
             if(j > 0 && grid[i][j - 1] == '1') {
                 q = p - 1;
-                uf.union(p, q);
-            }
-            if(j < n - 1 && grid[i][j + 1] == '1') {
-                q = p + 1;
                 uf.union(p, q);
             }
         }
