@@ -6,9 +6,12 @@ public class Solution {
         }
         Arrays.sort(nums);
         int len = nums.length;
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len - 2; i++) {
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
+            }
+            if (nums[i + 1] * 2 + nums[i] > 0) {
+                break;
             }
             int left = i + 1;
             int right = len - 1;
