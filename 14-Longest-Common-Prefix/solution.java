@@ -14,6 +14,7 @@ public class Solution {
                 }
             }
             end = j;
+            if (end == 0) return "";
         }
         return new String(vals, 0, end);
     }
