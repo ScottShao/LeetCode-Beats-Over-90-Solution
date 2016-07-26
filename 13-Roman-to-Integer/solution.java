@@ -18,11 +18,15 @@ public class Solution {
         for (int i = 0; i < symbol.length; i++)
             map.put(symbol[i], values[i]);
         
-        int num = 0, prev = 0;
+        int num = 0;
         char[] vals = s.toCharArray();
-        for (int i = 0; i < vals.length; i++) {
+        int len = vals.length;
+        len--;
+        num = map.get(vals[len--]);
+        int prev = num;
+        for (int i = vals.length - 2; i >= 0; i--) {
             int curr = map.get(vals[i]);
-            num += (curr > prev) ? (curr - 2 * prev) : curr;    // use subtractive rule
+            num += (curr >= prev) ?  curr : -curr;    // use subtractive rule
             prev = curr;
         }
         return num;
