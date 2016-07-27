@@ -4,13 +4,12 @@ public class Solution {
             return true;
         }   
         ArrayDeque<Character> stack = new ArrayDeque<>();
-        char[] vals = s.toCharArray();
         Map<Character, Character> map = new HashMap<Character, Character>(){{
             put(')', '(');
             put('}', '{');
             put(']', '[');
         }};
-        for (char ch : vals) {
+        for (char ch : s.toCharArray()) {
             if (ch == ')' || ch == '}' || ch == ']') {
                 if (stack.isEmpty() || map.get(ch) != stack.pop()) {
                     return false;
