@@ -7,8 +7,7 @@ public class Solution {
         int idx = 1;
         for (int i = 1; i < n; i++) {
             if (nums[i] != nums[i - 1]) {
-                nums[idx] = nums[i];
-                idx++;
+                nums[idx++] = nums[i];
             }
         }
         return idx;
