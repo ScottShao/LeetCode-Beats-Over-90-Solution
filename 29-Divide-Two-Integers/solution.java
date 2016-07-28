@@ -3,11 +3,14 @@ public class Solution {
         if (divisor == 1) {
             return dividend;
         }
+        int sign = 1;
         if (dividend > 0) {
-            return -divide(-dividend, divisor);
+            dividend = -dividend;
+            sign = -1;
         }
         if (divisor > 0) {
-            return -divide(dividend, -divisor);
+            divisor = -divisor;
+            sign = sign == -1 ? 1 : -1;
         }
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
@@ -23,6 +26,6 @@ public class Solution {
             dividend -= crt;
             res += multiplier;
         }
-        return res;
+        return sign * res;
     }
 }
