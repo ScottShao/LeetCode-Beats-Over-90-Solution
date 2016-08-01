@@ -9,18 +9,12 @@ public class Solution {
                     continue;
                 }
                 int num = board[i][j] - '0';
-                if (horizontal[i][num]) {
+                int idx = i / 3 * 3+ j / 3;
+                if (horizontal[i][num] || vertical[j][num] || square[idx][num]) {
                     return false;
                 }
                 horizontal[i][num] = true;
-                if (vertical[j][num]) {
-                    return false;
-                }
                 vertical[j][num] = true;
-                int idx = i / 3 * 3+ j / 3;
-                if (square[idx][num]) {
-                    return false;
-                }
                 square[idx][num] = true;
             }
         }
