@@ -8,9 +8,7 @@ public class Solution {
         while (idx >= 0 && nums[idx] >= nums[idx + 1]) {
             idx--;
         }
-        if (idx < 0) {
-            exchange(nums, 0, n - 1);
-        } else {
+        if (idx >= 0) {
             int find = idx + 1;
             while (find < n && nums[idx] < nums[find]) {
                 find++;
@@ -19,11 +17,12 @@ public class Solution {
             int temp = nums[idx];
             nums[idx] = nums[find];
             nums[find] = temp;
-            exchange(nums, idx + 1, n - 1);
         }
+        exchange(nums, idx + 1);
     }
     
-    private void exchange(int[] nums, int i, int j) {
+    private void exchange(int[] nums, int i) {
+        int j = nums.length - 1;
         while (i < j) {
             int temp = nums[i];
             nums[i] = nums[j];
