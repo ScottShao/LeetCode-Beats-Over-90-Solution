@@ -5,9 +5,6 @@ public class Solution {
             return results;
         }
         Arrays.sort(candidates);
-        if (candidates[0] > target) {
-            return results;
-        }
         dfs(0, 0, target, candidates, new ArrayList<>(), results);
         return results;
     }
