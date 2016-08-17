@@ -1,21 +1,15 @@
 public class Solution {
     public int jump(int[] nums) {
-        int len = nums.length;
-        int[] steps = new int[len];
-        int max = 0;
-        for (int i = 0; i < len - 1; i++) {
-            int temp = nums[i] + i;
-            if (temp > max) {
-                int newStep = steps[i] + 1;
-                if (temp >= len - 1) {
-                    return newStep;
-                }
-                for (int j = max + 1; j <= temp; j++) {
-                    steps[j] = newStep;
-                }
-                max = temp;
+        int jumps = 0, next = 0, max = 0;
+        int lastIndex = nums.length - 1;
+        for (int i = 0; i < lastIndex && next < lastIndex; i++) {
+            max = Math.max(max, i + nums[i]);  // max: the farthest index to reach
+            if (i == next) { // ready to jump
+                if (max == next)    return -1;  // unreachable
+                next = max; // next: next position to jump
+                jumps++;
             }
         }
-        return steps[len - 1];
+        return jumps;
     }
 }
