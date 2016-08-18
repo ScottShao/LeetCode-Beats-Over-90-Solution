@@ -1,22 +1,28 @@
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> crt = new ArrayList<>();
-        if (nums == null || nums.length == 0) {
-            return crt;
-        }
-        crt.add(new ArrayList<>());
-        int len = nums.length;
-        for (int i = 0; i < len; i++) {
-            List<List<Integer>> next = new ArrayList<>();
-            for (List<Integer> onePerm : crt) {
-                for (int j = 0; j <= i; j++) {
-                    List<Integer> temp = new ArrayList<>(onePerm);
-                    temp.add(j, nums[i]);
-                    next.add(temp);
-                }
-            }
-            crt = next;
-        }
-        return crt;
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+    	perm(result,nums,0,nums.length-1);
+    	return result;
+    }
+    public static void perm(List<List<Integer>> result, int[] nums, int start, int end){
+    	if(start == end){
+    		Integer[] ele = new Integer[nums.length];
+    		for(int i = 0; i < nums.length; i++){
+    			ele[i] = nums[i];
+    		}
+    		result.add(Arrays.asList(ele));
+    	} else {
+    		for(int i = start; i <= end; i++){
+    			int temp = nums[start];
+    			nums[start] = nums[i];
+    			nums[i] = temp;
+    			
+    			perm(result, nums,start+1,end);
+    			
+    			temp = nums[start];
+    			nums[start] = nums[i];
+    			nums[i] = temp;
+    		}
+    	}
     }
 }
