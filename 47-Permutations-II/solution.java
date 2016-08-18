@@ -1,32 +1,33 @@
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(nums == null || nums.length == 0) {
-            return res;
-        }
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
-        boolean[] used = new boolean[nums.length];
-        dfs(nums, used, new ArrayList<>(), res);
-        return res;
+    	perm(result,nums,0,nums.length-1);
+    	return result;
     }
-
-    public void dfs(int[] nums, boolean[] used, List<Integer> list, List<List<Integer>> res){
-        int size = list.size();
-        if (size == nums.length) {
-            res.add(new ArrayList<>(list));
-            return;
-        } else {
-            for (int i = 0; i < nums.length; i++) {
-                if (used[i] || (i > 0 && !used[i - 1] && nums[i] == nums[i - 1])) {
-                    continue;
-                } else {
-                    list.add(nums[i]);
-                    used[i] = true;
-                    dfs(nums, used, list, res);
-                    used[i] = false;
-                    list.remove(size);
-                }
-            }
-        }
+    public static void perm(List<List<Integer>> result, int[] nums, int start, int end){
+    	if(start == end){
+    		Integer[] ele = new Integer[nums.length];
+    		for(int i = 0; i < nums.length; i++) {
+    			ele[i] = nums[i];
+    		}
+    		result.add(Arrays.asList(ele));
+    	} else {
+    	    Set<Integer> swapped = new HashSet<>();
+    		for(int i = start; i <= end; i++) {
+    		    if (!swapped.contains(nums[i])) {
+        			int temp = nums[start];
+        			nums[start] = nums[i];
+        			nums[i] = temp;
+        			
+        			perm(result, nums,start+1,end);
+        			
+        			temp = nums[start];
+        			nums[start] = nums[i];
+        			nums[i] = temp;
+        			swapped.add(nums[i]);
+    		    }
+    		}
+    	}
     }
 }
