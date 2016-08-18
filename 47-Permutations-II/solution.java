@@ -7,11 +7,11 @@ public class Solution {
     }
     public static void perm(List<List<Integer>> result, int[] nums, int start, int end){
     	if(start == end){
-    		Integer[] ele = new Integer[nums.length];
-    		for(int i = 0; i < nums.length; i++) {
-    			ele[i] = nums[i];
+    		List<Integer> temp = new ArrayList<>();
+    		for(int i : nums) {
+    			temp.add(i);
     		}
-    		result.add(Arrays.asList(ele));
+    		result.add(temp);
     	} else {
     	    Set<Integer> swapped = new HashSet<>();
     		for(int i = start; i <= end; i++) {
