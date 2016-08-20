@@ -2,9 +2,6 @@ public class Solution {
     private long MASK;
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> res = new ArrayList<>();
-        long row = 0;
-        long ld = 0;
-        long rd = 0;
         MASK = (1 << n) - 1;
         dfs(0, n, 0L, 0L, 0L, new ArrayList<>(), res);
         return res;
