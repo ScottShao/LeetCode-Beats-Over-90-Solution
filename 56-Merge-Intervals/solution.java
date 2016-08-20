@@ -9,29 +9,23 @@
  */
 public class Solution {
     public List<Interval> merge(List<Interval> intervals) {
-        if (intervals == null || intervals.size() == 0) {
-            return intervals;
-        }
-        Collections.sort(intervals, new Comparator<Interval>() {
-            public int compare(Interval i1, Interval i2) {
-                return i1.start - i2.start;
-            }
-        });
-        List<Interval> res = new ArrayList<>();
-        int size = intervals.size();
-        int start = intervals.get(0).start;
-        int end = intervals.get(0).end;
-        for (int i = 1; i < size; i++) {
-            Interval crt = intervals.get(i);
-            if (crt.start <= end) {
-                end = Math.max(crt.end, end);
-            } else {
-                res.add(new Interval(start, end));
-                start = crt.start;
-                end = crt.end;
-            }
-        }
-        res.add(new Interval(start, end));
-        return res;
+        int n = intervals.size();
+    	int[] starts = new int[n];
+    	int[] ends = new int[n];
+    	for (int i = 0; i < n; i++) {
+    		starts[i] = intervals.get(i).start;
+    		ends[i] = intervals.get(i).end;
+    	}
+    	Arrays.sort(starts);
+    	Arrays.sort(ends);
+    	// loop through
+    	List<Interval> res = new ArrayList<Interval>();
+    	for (int i = 0, j = 0; i < n; i++) { // j is start of interval.
+    		if (i == n - 1 || starts[i + 1] > ends[i]) {
+    			res.add(new Interval(starts[j], ends[i]));
+    			j = i + 1;
+    		}
+    	}
+    	return res;
     }
 }
