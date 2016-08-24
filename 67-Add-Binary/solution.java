@@ -6,17 +6,17 @@ public class Solution {
         if (b == null || b.length() == 0) {
             return a;
         }
+        if (a.length() < b.length()) {
+            return addBinary(b, a);
+        }
         char[] v1 = a.toCharArray();
         char[] v2 = b.toCharArray();
         int i1 = v1.length - 1;
         int i2 = v2.length - 1;
         int carry = 0;
         StringBuilder sb = new StringBuilder();
-        while (i1 >= 0 || i2 >= 0) {
-            int num = carry;
-            if (i1 >= 0) {
-                num += v1[i1] - '0';
-            }
+        while (i1 >= 0) {
+            int num = carry + v1[i1] - '0';
             if (i2 >= 0) {
                 num += v2[i2] - '0';
             }
