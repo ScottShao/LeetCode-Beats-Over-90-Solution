@@ -12,25 +12,18 @@ public class Solution {
         int i2 = v2.length - 1;
         int carry = 0;
         StringBuilder sb = new StringBuilder();
-        while (i1 >= 0 && i2 >= 0) {
-            int num = v1[i1] - '0' + v2[i2] - '0' + carry;
+        while (i1 >= 0 || i2 >= 0) {
+            int num = carry;
+            if (i1 >= 0) {
+                num += v1[i1] - '0';
+            }
+            if (i2 >= 0) {
+                num += v2[i2] - '0';
+            }
             sb.append(num % 2);
             carry = num / 2;
             i1--;
             i2--;
-        }
-        if (i1 >= 0) {
-            for (int i = i1; i >= 0; i--) {
-                int num = v1[i] - '0' + carry;
-                sb.append(num % 2);
-                carry = num / 2;
-            }
-        } else if (i2 >= 0) {
-            for (int i = i2; i >= 0; i--) {
-                int num = v2[i] - '0' + carry;
-                sb.append(num % 2);
-                carry = num / 2;
-            }
         }
         if (carry != 0) {
             sb.append(carry);
