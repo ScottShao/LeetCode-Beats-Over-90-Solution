@@ -1,15 +1,17 @@
 public class Solution {
     public String simplifyPath(String path) {
         StringBuilder sb = new StringBuilder();
-        Stack<String> stack = new Stack<>();
-        int i = 0, len = path.length();
+        Deque<String> stack = new ArrayDeque<>();
+        int i = 0;
+        int len = path.length();
+        char[] vals = path.toCharArray();
         while (i < len) {
-            if (path.charAt(i) == '/') {
-                int j = i+1;
-                while (j < len && path.charAt(j) != '/') {
+            if (vals[i] == '/') {
+                int j = i + 1;
+                while (j < len && vals[j] != '/') {
                     j++;
                 }
-                String current = path.substring(i+1, j);
+                String current = new String(vals, i + 1, j - i - 1);
                 if (current.equals("..")) {
                     if (!stack.isEmpty()) {
                         stack.pop();
@@ -22,8 +24,8 @@ public class Solution {
                 i = j;
             }
         }
-        for (String s : stack) {
-            sb.append("/"+s);
+        while (!stack.isEmpty()) {
+            sb.append("/"+stack.pollLast());
         }
         return sb.length() == 0 ? "/" : sb.toString();
     }
