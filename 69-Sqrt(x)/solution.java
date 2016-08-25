@@ -4,8 +4,9 @@ public class Solution {
             return 0;
         }
         long crt = x;
-        while (crt > x / crt) {
-            crt = (x / crt + crt) / 2;
+        long temp;
+        while (crt > (temp = x / crt)) {
+            crt = (temp + crt) / 2;
         }
         return (int) crt;
     }
