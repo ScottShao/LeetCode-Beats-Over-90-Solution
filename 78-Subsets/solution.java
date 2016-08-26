@@ -1,10 +1,19 @@
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (nums == null) { return ans; }
-        Arrays.sort(nums);  // non-descending order
-        dfs(ans, nums, new ArrayList<Integer>(), 0);
-        return ans; 
+        int n = nums.length;
+        List<List<Integer>> subsets = new ArrayList<>();
+        for (int i = 0; i < Math.pow(2, n); i++)
+        {
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < n; j++)
+            {
+                if (((1 << j) & i) != 0)
+                    subset.add(nums[j]);
+            }
+            Collections.sort(subset);
+            subsets.add(subset);
+        }
+        return subsets; 
     }
     
     private void dfs(List<List<Integer>> ans, int[] nums, List<Integer> list, int index) {
