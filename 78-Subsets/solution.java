@@ -10,7 +10,6 @@ public class Solution {
                 if (((1 << j) & i) != 0)
                     subset.add(nums[j]);
             }
-            Collections.sort(subset);
             subsets.add(subset);
         }
         return subsets; 
