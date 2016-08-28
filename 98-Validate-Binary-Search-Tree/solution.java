@@ -9,22 +9,14 @@
  */
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<TreeNode> ();
-		   TreeNode cur = root ;
-		   TreeNode pre = null ;		   
-		   while (!stack.isEmpty() || cur != null) {			   
-			   if (cur != null) {
-				   stack.push(cur);
-				   cur = cur.left ;
-			   } else {				   
-				   TreeNode p = stack.pop() ;
-				   if (pre != null && p.val <= pre.val) {					   
-					   return false ;
-				   }				   
-				   pre = p ;					   
-				   cur = p.right ;
-			   }
-		   }
-		   return true ; 
+        return valid(root, null, null);
+    }
+    
+    private boolean valid(TreeNode x, Integer low, Integer high) {
+        if (x == null) return true;
+        return (low == null || x.val > low) 
+            && (high == null || x.val < high)
+            && valid(x.left, low, x.val) 
+            && valid(x.right, x.val, high);
     }
 }
