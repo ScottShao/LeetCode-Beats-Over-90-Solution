@@ -20,16 +20,10 @@ public class Solution {
                 }
                 prev = crt.val;
                 crt = crt.right;
-            } else if (crt.left != null) {
+            } else {
                 stack.push(crt);
                 crt = crt.left;
-            } else {
-                if (prev != null && prev >= crt.val) {
-                    return false;
-                }
-                prev = crt.val;
-                crt = crt.right;
-            }
+            } 
         }
         return true;
     }
