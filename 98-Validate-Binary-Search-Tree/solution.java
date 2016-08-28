@@ -9,22 +9,22 @@
  */
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        TreeNode crt = root;
-        Integer prev = null;
-        while (crt != null || !stack.isEmpty()) {
-            if (crt == null) {
-                crt = stack.pop();
-                if (prev != null && prev >= crt.val) {
-                    return false;
-                }
-                prev = crt.val;
-                crt = crt.right;
-            } else {
-                stack.push(crt);
-                crt = crt.left;
-            } 
-        }
-        return true;
+        Stack<TreeNode> stack = new Stack<TreeNode> ();
+		   TreeNode cur = root ;
+		   TreeNode pre = null ;		   
+		   while (!stack.isEmpty() || cur != null) {			   
+			   if (cur != null) {
+				   stack.push(cur);
+				   cur = cur.left ;
+			   } else {				   
+				   TreeNode p = stack.pop() ;
+				   if (pre != null && p.val <= pre.val) {					   
+					   return false ;
+				   }				   
+				   pre = p ;					   
+				   cur = p.right ;
+			   }
+		   }
+		   return true ; 
     }
 }
