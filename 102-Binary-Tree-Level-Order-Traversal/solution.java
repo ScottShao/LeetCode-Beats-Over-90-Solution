@@ -13,7 +13,7 @@ public class Solution {
         if (root == null) {
             return res;
         }
-        Deque<TreeNode> que = new ArrayDeque<>();
+        Queue<TreeNode> que = new LinkedList<>();
         que.add(root);
         while (!que.isEmpty()) {
             int size = que.size();
