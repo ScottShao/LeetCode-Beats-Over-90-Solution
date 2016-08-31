@@ -20,8 +20,8 @@ public class Solution {
             int crt = divisor;
             int multiplier = 1;
             while (crt > dividend - crt) {
-                crt = crt << 1;
-                multiplier = multiplier << 1;
+                crt += crt;
+                multiplier += multiplier;
             }
             dividend -= crt;
             res += multiplier;
