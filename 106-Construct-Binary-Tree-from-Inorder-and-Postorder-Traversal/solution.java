@@ -21,9 +21,6 @@ public class Solution {
     }
     
     private TreeNode buildTree(int[] inorder, int start, int end, int[] postorder, int crt, Map<Integer, Integer> val2Idx) {
-        if (crt < 0) {
-            return null;
-        }
         TreeNode root = new TreeNode(postorder[crt]);
         int idx = val2Idx.get(postorder[crt]);
         if (idx < end) {
