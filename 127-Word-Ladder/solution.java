@@ -1,35 +1,47 @@
 public class Solution {
     public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        Deque<String> queue = new ArrayDeque<>();
-        int depth = 1;
-        int len = beginWord.length();
-        queue.add(beginWord);
-        wordList.remove(beginWord);
-        
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                char[] vals = queue.poll().toCharArray();
-                for (int j = 0; j < len; j++) {
-                    char  temp = vals[j];
-                    for (char ch = 'a'; ch <= 'z'; ch++) {
-                        if (ch != temp) {
-                            vals[j] = ch;
-                            String next = new String(vals);
-                            if (next.equals(endWord)) {
-                                return depth + 1;
-                            }
-                            if (wordList.contains(next)) {
-                                queue.add(next);
-                                wordList.remove(next);
-                            }
-                            vals[j] = temp;
-                        }
-                    }
-                }
-            }
-            depth++;
-        }
-        return 0;
+        Set<String> beginSet = new HashSet<String>(), endSet = new HashSet<String>();
+
+    	int len = 1;
+    	int strLen = beginWord.length();
+    	HashSet<String> visited = new HashSet<String>();
+    	
+    	beginSet.add(beginWord);
+    	endSet.add(endWord);
+    	while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+    		if (beginSet.size() > endSet.size()) {
+    			Set<String> set = beginSet;
+    			beginSet = endSet;
+    			endSet = set;
+    		}
+    
+    		Set<String> temp = new HashSet<String>();
+    		for (String word : beginSet) {
+    			char[] chs = word.toCharArray();
+    
+    			for (int i = 0; i < chs.length; i++) {
+    				for (char c = 'a'; c <= 'z'; c++) {
+    					char old = chs[i];
+    					chs[i] = c;
+    					String target = String.valueOf(chs);
+    
+    					if (endSet.contains(target)) {
+    						return len + 1;
+    					}
+    
+    					if (!visited.contains(target) && wordList.contains(target)) {
+    						temp.add(target);
+    						visited.add(target);
+    					}
+    					chs[i] = old;
+    				}
+    			}
+    		}
+    
+    		beginSet = temp;
+    		len++;
+    	}
+    	
+    	return 0;
     }
 }
