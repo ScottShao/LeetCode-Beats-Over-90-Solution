@@ -1,12 +1,13 @@
 public class Solution {
-    public int singleNumber(int[] nums) {
-        int[] count = new int[32];  // 32-bit integer
-        int result = 0;
-        for (int i = 0; i < 32; i++) {  // 1st loop must be bit: otherwise count % 3 will not be 0 or 1
-            for (int num : nums)
-                if (((num >> i) & 1) == 1)     count[i]++;
-            result |= ((count[i] % 3) << i);
+    public int singleNumber(int[] A) {
+        if (A == null) return 0;
+        int x0 = ~0, x1 = 0, x2 = 0, t;
+        for (int i = 0; i < A.length; i++) {
+            t = x2;
+            x2 = (x1 & A[i]) | (x2 & ~A[i]);
+            x1 = (x0 & A[i]) | (x1 & ~A[i]);
+            x0 = (t & A[i]) | (x0 & ~A[i]);
         }
-        return result;
+        return x1;
     }
 }
