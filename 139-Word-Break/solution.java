@@ -5,7 +5,6 @@ public class Solution {
         
         for (String str : wordDict) {
             int l = str.length();
-            wordMinLen = Math.min(wordMinLen, l);
             wordMaxLen = Math.max(wordMaxLen, l);
         }
         char[] vals = s.toCharArray();
@@ -19,7 +18,7 @@ public class Solution {
         if (visited.contains(index)) {
             return false;
         }
-        for (int i = wordMinLen; i <= wordMaxLen && index + i <= vals.length; i++) {
+        for (int i = 1; i <= wordMaxLen && index + i <= vals.length; i++) {
             String next = new String(vals, index, i);
             if (wordDict.contains(next)) {
                 if (dfs(vals, index + i, visited, wordDict)) {
