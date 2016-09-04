@@ -1,6 +1,6 @@
 public class Solution {
-    private int wordMinLen = Integer.MAX_VALUE;
     private int wordMaxLen = 0;
+    private int len = 0;
     public boolean wordBreak(String s, Set<String> wordDict) {
         
         for (String str : wordDict) {
@@ -8,17 +8,18 @@ public class Solution {
             wordMaxLen = Math.max(wordMaxLen, l);
         }
         char[] vals = s.toCharArray();
-        return dfs(vals, 0, new HashSet<>(), wordDict);
+        len = vals.length;
+        return dfs(vals, 0, new boolean[len], wordDict);
     }
     
-    private boolean dfs(char[] vals, int index, Set<Integer> visited, Set<String> wordDict) {
-        if (index == vals.length) {
+    private boolean dfs(char[] vals, int index, boolean[] visited, Set<String> wordDict) {
+        if (index == len) {
             return true;
         }
-        if (visited.contains(index)) {
+        if (visited[index]) {
             return false;
         }
-        for (int i = 1; i <= wordMaxLen && index + i <= vals.length; i++) {
+        for (int i = 1; i <= wordMaxLen && index + i <= len; i++) {
             String next = new String(vals, index, i);
             if (wordDict.contains(next)) {
                 if (dfs(vals, index + i, visited, wordDict)) {
@@ -26,7 +27,7 @@ public class Solution {
                 }
             }
         }
-        visited.add(index);
+        visited[index] = true;
         return false;
     }
     
