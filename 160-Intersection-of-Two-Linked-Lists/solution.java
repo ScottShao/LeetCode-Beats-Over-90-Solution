@@ -13,19 +13,19 @@ public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         int l1 = 0;
         int l2 = 0;
-        ListNode crt = headA;
-        while (crt != null) {
-            crt = crt.next;
+        ListNode p1 = null;
+        ListNode p2 = null;
+        p1 = headA;
+        while (p1 != null) {
+            p1 = p1.next;
             l1++;
         }
-        crt = headB;
-        while (crt != null) {
-            crt = crt.next;
+        p1 = headB;
+        while (p1 != null) {
+            p1 = p1.next;
             l2++;
         }
         int dif = l2 - l1;
-        ListNode p1 = null;
-        ListNode p2 = null;
         if (dif > 0) {
             p1 = headB;
             p2 = headA;
