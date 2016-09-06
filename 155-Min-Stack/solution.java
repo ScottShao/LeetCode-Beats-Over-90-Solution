@@ -1,39 +1,40 @@
 public class MinStack {
-    private Node head;
+    class IntPair {
+        int num;
+        int nextMin;    // the minVal when this new entry is pushed onto stack
+        IntPair(int v1, int v2) {
+            num = v1;
+            nextMin = v2;
+        }
+    }
+    
+    Stack<IntPair> s;
+    int minVal;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        s = new Stack<>();
+        minVal = Integer.MAX_VALUE;
+    }
     
     public void push(int x) {
-        if(head == null) 
-            head = new Node(x, x);
-        else 
-            head = new Node(x, Math.min(x, head.min), head);
-    }
-
-    public void pop() {
-        head = head.next;
-    }
-
-    public int top() {
-        return head.val;
-    }
-
-    public int getMin() {
-        return head.min;
+        s.push(new IntPair(x, minVal) );
+        minVal = Math.min(minVal, x);
     }
     
-    private class Node {
-        int val;
-        int min;
-        Node next;
+    public void pop() {
+        IntPair curr = s.pop();
         
-        private Node(int val, int min) {
-            this(val, min, null);
-        }
-        
-        private Node(int val, int min, Node next) {
-            this.val = val;
-            this.min = min;
-            this.next = next;
-        }
+        // if the current minVal is popped, restore minVal to the minVal when this entry is pushed onto stack
+        if (minVal == curr.num) minVal = curr.nextMin;
+    }
+    
+    public int top() {
+        return s.peek().num;
+    }
+    
+    public int getMin() {
+        return minVal;
     }
 }
 
