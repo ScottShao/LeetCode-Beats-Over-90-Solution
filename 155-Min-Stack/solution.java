@@ -8,12 +8,12 @@ public class MinStack {
         }
     }
     
-    Stack<IntPair> s;
+    Deque<IntPair> s;
     int minVal;
 
     /** initialize your data structure here. */
     public MinStack() {
-        s = new Stack<>();
+        s = new ArrayDeque<>();
         minVal = Integer.MAX_VALUE;
     }
     
