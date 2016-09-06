@@ -6,21 +6,24 @@ public class Solution {
         int index = 0;
         for (int i = 0; i < len; i++) {
             String crt = tokens[i];
-            if (crt.equals("*")) {
-                index--;
-                stack[index - 1] *= stack[index];
-            } else if (crt.equals("/")) {
-                index--;
-                stack[index - 1] /= stack[index];
-            } else if (crt.equals("-")) {
-                index--;
-                stack[index - 1] -= stack[index];
-            } else if (crt.equals("+")) {
-                index--;
-                stack[index - 1] += stack[index];
-            } else {
-                stack[index] = Integer.valueOf(crt);
-                index++;
+            index--;
+            switch(crt) {
+                case "*":
+                    stack[index - 1] *= stack[index];
+                    break;
+                case "/":
+                    stack[index - 1] /= stack[index];
+                    break;
+                case "+":
+                    stack[index - 1] += stack[index];
+                    break;
+                case "-":
+                    stack[index - 1] -= stack[index];
+                    break;
+                default:
+                    index++;
+                    stack[index] = Integer.valueOf(crt);
+                    index++;
             }
         }
         return stack[0];
