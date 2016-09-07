@@ -9,43 +9,32 @@
  */
 
 public class BSTIterator {
-    private Deque<TreeNode> stack;
-    private TreeNode next;
+    private TreeNode crt;
     public BSTIterator(TreeNode root) {
-        next = null;
-        stack = new ArrayDeque<>();
-        setNext(root);
+        crt = root;
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() {
-        return next != null || !stack.isEmpty();
+        return crt != null;
     }
 
     /** @return the next smallest number */
     public int next() {
-        int re;
-        if (next == null) {
-            TreeNode temp = stack.pop();
-            re = temp.val;
-            setNext(temp.right);
-        } else {
-            re = next.val;
-            setNext(next.right);
+        while (crt.left != null) {
+            TreeNode temp = crt.left;
+            while (temp.right != null && temp.right != crt) temp = temp.right;
+            if (temp.right == null) {
+                temp.right = crt;
+                crt = crt.left;
+            } else {
+                temp.right = null;
+                break;
+            }
         }
+        int re = crt.val;
+        crt = crt.right;
         return re;
-    }
-    
-    private void setNext(TreeNode root){
-        if (root == null) {
-            next = null;
-            return;
-        }
-        while (root.left != null) {
-            stack.push(root);
-            root = root.left;
-        }
-        next = root;
     }
 }
 
