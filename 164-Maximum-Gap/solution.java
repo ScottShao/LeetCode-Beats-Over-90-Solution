@@ -2,40 +2,38 @@ public class Solution {
     public int maximumGap(int[] num) {
         if (num == null || num.length < 2)
             return 0;
-        // get the max and min value of the array
-        int min = num[0];
+        int numOfDigit = 10;
+        int len = num.length;
+        
+        int[] aux = new int[len];
         int max = num[0];
-        for (int i:num) {
-            min = Math.min(min, i);
-            max = Math.max(max, i);
+        for (int i = 1; i < len; i++) {
+            max = Math.max(num[i], max);
         }
-        // the minimum possibale gap, ceiling of the integer division
-        int gap = (int)Math.ceil((double)(max - min)/(num.length - 1));
-        int[] bucketsMIN = new int[num.length - 1]; // store the min value in that bucket
-        int[] bucketsMAX = new int[num.length - 1]; // store the max value in that bucket
-        Arrays.fill(bucketsMIN, Integer.MAX_VALUE);
-        Arrays.fill(bucketsMAX, Integer.MIN_VALUE);
-        // put numbers into buckets
-        for (int i:num) {
-            if (i == min || i == max)
-                continue;
-            int idx = (i - min) / gap; // index of the right position in the buckets
-            bucketsMIN[idx] = Math.min(i, bucketsMIN[idx]);
-            bucketsMAX[idx] = Math.max(i, bucketsMAX[idx]);
+        int exp = 1;
+        while (max / exp > 0) {
+            int[] count = new int[numOfDigit];
+            for (int n : num) {
+                count[n / exp % numOfDigit]++;
+            }
+            
+            for (int i = 1; i < numOfDigit; i++) {
+                count[i] += count[i - 1];
+            }
+            
+            for (int i = len - 1; i >= 0; i--) {
+                aux[--count[num[i] / exp % numOfDigit]] = num[i];
+            }
+            
+            for (int i = 0; i < len; i++) {
+                num[i] = aux[i];
+            }
+            exp *= 10;
         }
-        // scan the buckets for the max gap
-        int maxGap = Integer.MIN_VALUE;
-        int previous = min;
-        for (int i = 0; i < num.length - 1; i++) {
-            if (bucketsMIN[i] == Integer.MAX_VALUE && bucketsMAX[i] == Integer.MIN_VALUE)
-                // empty bucket
-                continue;
-            // min value minus the previous value is the current gap
-            maxGap = Math.max(maxGap, bucketsMIN[i] - previous);
-            // update previous bucket value
-            previous = bucketsMAX[i];
+        int maxGap = 0;
+        for (int i = 1; i < len; i++) {
+            maxGap = Math.max(maxGap, num[i] - num[i - 1]);
         }
-        maxGap = Math.max(maxGap, max - previous); // updata the final max value gap
         return maxGap;
     }
 }
