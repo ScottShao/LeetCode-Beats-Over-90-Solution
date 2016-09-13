@@ -1,11 +1,15 @@
 public class Solution {
     public int rangeBitwiseAnd(int m, int n) {
-        int x = m ^ n;
-        int s = x >> 1;
-        while (s > 0) {
-            x = x | s;
-            s >>= 1;
+        int mask = 1;
+        while (mask <= n / 2) {
+            mask = mask << 1;
         }
-        return m & n & ~x;
+        int res = 0;
+        int temp = 0;
+        while (mask > 0 && ((temp = (m & mask)) ^ (n & mask)) == 0) {
+            res += temp;
+            mask = mask >> 1;
+        }
+        return res;
     }
 }
