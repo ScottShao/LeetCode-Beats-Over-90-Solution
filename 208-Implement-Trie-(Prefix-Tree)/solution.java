@@ -31,27 +31,25 @@ public class Trie {
 
     // Returns if the word is in the trie.
     public boolean search(String word) {
-        char[] vals = word.toCharArray();
-        TrieNode crt = root;
-        for (char ch : vals) {
-            int index = ch - 'a';
-            if (crt.nodes[index] == null) return false;
-            crt = crt.nodes[index];
-        }
-        return crt.isWord;
+        TrieNode end = searchPrefix(word);
+        return end != null && end.isWord;
     }
 
     // Returns if there is any word in the trie
     // that starts with the given prefix.
     public boolean startsWith(String prefix) {
+        return searchPrefix(prefix) != null;
+    }
+    
+    private TrieNode searchPrefix(String prefix) {
         char[] vals = prefix.toCharArray();
         TrieNode crt = root;
         for (char ch : vals) {
             int index = ch - 'a';
-            if (crt.nodes[index] == null) return false;
+            if (crt.nodes[index] == null) return null;
             crt = crt.nodes[index];
         }
-        return true;
+        return crt;
     }
 }
 
