@@ -8,15 +8,15 @@ public class Solution extends Reader4 {
      * @return    The number of characters read
      */
     public int read(char[] buf, int n) {
-        int tmp=0;
-        int ans=0;
-        char[] nbuf=new char[4];
-        while((tmp=read4(nbuf))!=0)
+        int tmp = 0;
+        int ans = 0;
+        char[] nbuf = new char[4];
+        while((tmp = read4(nbuf)) !=0)
         {
-            for(int i=0;i<tmp;i++)
+            for(int i = 0;i < tmp;i++)
             {
-                if(ans==n) return ans;
-                buf[ans++]=nbuf[i];
+                if(ans == n) return ans;
+                buf[ans++] = nbuf[i];
             }
         }
         return ans;
