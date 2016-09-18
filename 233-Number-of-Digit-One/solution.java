@@ -9,7 +9,7 @@ public class Solution {
             if (digit == 1) ans += n % x + 1;
             if (digit >  1) ans += x;
             x *= 10;
-        };
+        }
         return ans;
     }
 }
