@@ -7,10 +7,7 @@ public class Solution {
             char[] vals = str.toCharArray();
             int dif = vals[0] - 'a';
             for (int i = 0; i < vals.length; i++) {
-                vals[i] = (char) (vals[i] - dif);
-                if (vals[i] < 'a') {
-                    vals[i] = (char) (vals[i] + 26);
-                }
+                vals[i] = (char) ((vals[i] - dif + 26) % 26);
             }
             String key = new String(vals);
             List<String> value = map.get(key);
