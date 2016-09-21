@@ -6,7 +6,7 @@ public class Solution {
             int n = nums[i];
             Integer floor = set.floor(n);
             Integer ceiling = set.ceiling(n);
-            if (floor != null && n <= t + floor) return true;
+            if (floor != null && floor >= n - t) return true;
             if (ceiling != null && ceiling <= t + n) return true;
             set.add(n);
             if (i >= k) set.remove(nums[i - k]);
