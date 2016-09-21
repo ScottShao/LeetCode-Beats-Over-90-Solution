@@ -6,7 +6,6 @@ public class Solution {
         int k = costs[0].length;
         if (k == 0) return 0;
         int[] dp= new int[k];
-        int[] tmp = new int[k];
         for (int j =0; j < k; ++j) dp[j] = costs[0][j];
         for (int i = 1; i < n; ++i) {
             // Index of the minimum value in dp[].
@@ -21,15 +20,16 @@ public class Solution {
                     q = j;
                 }
             }
+            int min = dp[p];
+            int sec = dp[q];
             for (int j = 0; j < k; ++j) {
-                tmp[j] = costs[i][j];
+                dp[j] = costs[i][j];
                 if (j != p) {
-                    tmp[j] += dp[p];
+                    dp[j] += min;
                 } else {
-                    tmp[j] += dp[q];
+                    dp[j] += sec;
                 }
             }
-            for (int j =0; j < k; ++j) dp[j] = tmp[j];
         }
         int min = dp[0];
         for (int j = 0; j < k; ++j) {
