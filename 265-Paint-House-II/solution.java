@@ -6,12 +6,13 @@ public class Solution {
         int k = costs[0].length;
         if (k == 0) return 0;
         int[] dp= new int[k];
+        int p, q, min, sec;
         for (int j =0; j < k; ++j) dp[j] = costs[0][j];
         for (int i = 1; i < n; ++i) {
             // Index of the minimum value in dp[].
-            int p = dp[0] < dp[1] ? 0 : 1;
+            p = dp[0] < dp[1] ? 0 : 1;
             // Index of the second minimum value in dp[].
-            int q = dp[0] < dp[1] ? 1 : 0;
+            q = dp[0] < dp[1] ? 1 : 0;
             for (int j = 2; j < k; j++) {
                 if (dp[j] < dp[p]) {
                     q = p;
@@ -20,8 +21,8 @@ public class Solution {
                     q = j;
                 }
             }
-            int min = dp[p];
-            int sec = dp[q];
+            min = dp[p];
+            sec = dp[q];
             for (int j = 0; j < k; ++j) {
                 dp[j] = costs[i][j];
                 if (j != p) {
@@ -31,8 +32,8 @@ public class Solution {
                 }
             }
         }
-        int min = dp[0];
-        for (int j = 0; j < k; ++j) {
+        min = dp[0];
+        for (int j = 1; j < k; ++j) {
                 min = Math.min(min, dp[j]);
         }
         return min;
