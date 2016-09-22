@@ -13,6 +13,6 @@ public class Solution {
                 left = mid + 1;
             }
         }
-        return len - left;
+        return len - right;
     }
 }
