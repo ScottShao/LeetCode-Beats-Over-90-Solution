@@ -4,7 +4,7 @@ public class Solution {
         int len = citations.length;
         if (len == 0) return 0;
         int left = 0;
-        int right = len - 1;
+        int right = len;
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (len - mid <= citations[mid]) {
@@ -13,6 +13,6 @@ public class Solution {
                 left = mid + 1;
             }
         }
-        return len - left <= citations[left] ? len - left : 0;
+        return len - left;
     }
 }
