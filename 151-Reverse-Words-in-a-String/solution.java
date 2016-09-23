@@ -1,7 +1,6 @@
 public class Solution {
     public String reverseWords(String s) {
         if (s == null) return s;
-        s = s.trim();
         int len = s.length();
         if(len == 0) return s;
         char[] vals = s.toCharArray();
@@ -23,7 +22,7 @@ public class Solution {
             }
         }
         
-        return new String(vals, 0, idx - 1);
+        return idx == 0 ? "" : new String(vals, 0, idx - 1);
     }
     
     private void reverse(char[] vals, int low, int high) {
