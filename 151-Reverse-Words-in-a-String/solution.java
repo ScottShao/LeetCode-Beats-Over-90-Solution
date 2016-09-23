@@ -14,15 +14,13 @@ public class Solution {
                 for (int k = i; k < j; k++) {
                     vals[idx++] = vals[k];
                 }
-                if (idx == len) return new String(vals);
-                else vals[idx++] = ' ';
+                if (idx < len) vals[idx++] = ' ';
                 i = j + 1;
             } else {
                 i++;
             }
         }
-        
-        return idx == 0 ? "" : new String(vals, 0, idx - 1);
+        return idx == 0 ? "" : vals[idx - 1] == ' ' ? new String(vals, 0, idx - 1) : new String(vals, 0, idx);
     }
     
     private void reverse(char[] vals, int low, int high) {
