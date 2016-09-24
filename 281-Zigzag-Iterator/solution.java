@@ -1,45 +1,18 @@
 public class ZigzagIterator {
-    private Iterator<Integer> crt;
-    private Iterator<Integer> first;
-    private Iterator<Integer> second;
-    private boolean usingFirst;
+    private Iterator<Integer> i, j, tmp;
+
     public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
-        if (v1 != null) {
-            first = v1.iterator();
-        }
-        if (v2 != null) {
-            second = v2.iterator();
-        }
-        if (first == null) {
-            first = second;
-        }
-        if (second == null) {
-            second = first;
-        }
-        crt = first;
-        usingFirst = true;
+        i = v2.iterator();
+        j = v1.iterator();
     }
 
     public int next() {
-        int re = crt.next();
-        if (usingFirst) {
-            crt = second;
-        } else {
-            crt = first;
-        }
-        usingFirst = !usingFirst;
-        return re;
+        if (j.hasNext()) { tmp = j; j = i; i = tmp; }
+        return i.next();
     }
 
     public boolean hasNext() {
-        if (crt == null) return false;
-        boolean re = crt.hasNext();
-        if (!re) {
-            if (usingFirst) first = second;
-            else second = first;
-            crt = first;
-        }
-        return crt.hasNext();
+        return i.hasNext() || j.hasNext();
     }
 }
 
