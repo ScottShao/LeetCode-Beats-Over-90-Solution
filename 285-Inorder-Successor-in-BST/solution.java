@@ -13,11 +13,8 @@ public class Solution {
         int dif = Integer.MAX_VALUE;
         while (root != null) {
             if (root.val > p.val) {
-                int crtDif = root.val - p.val;
-                if (crtDif < dif) {
-                    dif = crtDif;
-                    re = root;
-                }
+                dif = root.val - p.val;
+                re = root;
                 root = root.left;
             } else {
                 root = root.right;
