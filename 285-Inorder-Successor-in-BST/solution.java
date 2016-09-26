@@ -19,11 +19,9 @@ public class Solution {
                     re = root;
                 }
                 root = root.left;
-            } else if (root.val < p.val) {
-                root = root.right;
             } else {
                 root = root.right;
-            }
+            } 
         }
         return re;
     }
