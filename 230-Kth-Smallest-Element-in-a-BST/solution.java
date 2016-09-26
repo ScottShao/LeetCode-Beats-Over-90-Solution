@@ -8,25 +8,21 @@
  * }
  */
 public class Solution {
-    private int crt = 0;
-    private int re = -1;
+    private TreeNode re = null;
     private int k;
-    private boolean found = false;
     public int kthSmallest(TreeNode root, int k) {
         this.k = k;
-        inorder(root);
-        return re;
+        return inorder(root).val;
     }
     
-    private void inorder(TreeNode root) {
-        if (!found && root != null) {
-            inorder(root.left);
-            if (++crt == k) {
-                re = root.val;
-                found = true;
-                return;
-            }
-            inorder(root.right);
-        }
+    private TreeNode inorder(TreeNode root) {
+        if (root == null) return null;
+        TreeNode left = inorder(root.left);
+        if (left != null) return left;
+        k--;
+        if (k == 0) return root;
+        TreeNode right = inorder(root.right);
+        if (right != null) return right;
+        return null;
     }
 }
