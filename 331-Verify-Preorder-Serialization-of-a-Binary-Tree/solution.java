@@ -18,6 +18,6 @@ public class Solution {
             } 
             stack[index++] = node;
         }
-        return index == 1 && i == len && stack[0].equals("#");
+        return index == 1 && stack[0].equals("#");
     }
 }
