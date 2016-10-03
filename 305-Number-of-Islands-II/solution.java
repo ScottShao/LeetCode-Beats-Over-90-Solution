@@ -1,40 +1,56 @@
 public class Solution {
-    int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
-
-public List<Integer> numIslands2(int m, int n, int[][] positions) {
-    List<Integer> result = new ArrayList<>();
-    if(m <= 0 || n <= 0) return result;
-
-    int count = 0;                      // number of islands
-    int[] roots = new int[m * n];       // one island = one tree
-    Arrays.fill(roots, -1);            
-
-    for(int[] p : positions) {
-        int root = n * p[0] + p[1];     // assume new point is isolated island
-        roots[root] = root;             // add new island
-        count++;
-
-        for(int[] dir : dirs) {
-            int x = p[0] + dir[0]; 
-            int y = p[1] + dir[1];
-            int nb = n * x + y;
-            if(x < 0 || x >= m || y < 0 || y >= n || roots[nb] == -1) continue;
-            
-            int rootNb = findIsland(roots, nb);
-            if(root != rootNb) {        // if neighbor is in another island
-                roots[root] = rootNb;   // union two islands 
-                root = rootNb;          // current tree root = joined tree root
-                count--;               
+    public int find(int[] father, int id) {
+            int tf = father[id];
+            while (tf != father[tf]) tf = father[tf];
+            int cur = id, tmp;
+            while (father[cur] != tf) {
+                tmp = father[cur];
+                father[cur] = tf;
+                cur = tmp;
+            }
+            return tf;
+        }
+        public void union(int[] father, int[] sz, int id1, int id2) {
+            int tf1 = find(father, id1);
+            int tf2 = find(father, id2);
+            if (tf1 != tf2) {
+                if (sz[tf1] > sz[tf2]) {
+                    father[tf2] = tf1;
+                    sz[tf1] += sz[tf2];
+                }
+                else {
+                    father[tf1] = tf2;
+                    sz[tf2] += sz[tf1];
+                }
             }
         }
-
-        result.add(count);
+        public List<Integer> numIslands2(int m, int n, int[][] positions) {
+            if (m == 0 || n == 0) return new ArrayList<Integer>();
+            ArrayList<Integer> res = new ArrayList<Integer>();
+            int[] father = new int[m * n];
+            for (int i = 0; i < father.length; i ++) father[i] = -1;
+            int[] sz = new int[m * n];
+            int[] dr = {0, 0, -1, 1};
+            int[] dc = {-1, 1, 0, 0};
+            int r, c, nr, nc, count = 0;
+            for (int i = 0; i < positions.length; i ++) {
+                r = positions[i][0];
+                c = positions[i][1];
+                count ++;
+                father[r * n + c] = r * n + c;
+                sz[r * n + c] = 1;
+                for (int j = 0; j < 4; j ++) {
+                    nr = r + dr[j];
+                    nc = c + dc[j];
+                    if (nr >= 0 && nr < m && nc >= 0 && nc < n && father[nr * n + nc] != -1) {
+                        if (find(father, r * n + c) != find(father, nr * n + nc)) {
+                            count --;
+                            union(father, sz, r * n + c, nr * n + nc);
+                        }
+                    }
+                }
+                res.add(count);
+            }
+            return res;
+        }
     }
-    return result;
-}
-
-public int findIsland(int[] roots, int id) {
-    while(id != roots[id]) id = roots[id];
-    return id;
-}
-}
