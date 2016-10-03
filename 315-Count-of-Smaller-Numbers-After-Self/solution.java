@@ -1,47 +1,39 @@
 public class Solution {
-    class BIT {
-	int n;
-	int[] bit;
-
-	BIT(int size) {
-		this.n = size + 1;
-		this.bit = new int[this.n];
-	}
-
-	void update(int i) {
-		while (i <= n - 1) {
-			bit[i]++;
-			i = i + (i & -i);
-		}
-	}
-
-	int sum(int i) {
-		int ans = 0;
-		while (i > 0) {
-			ans += bit[i];
-			i = i - (i & -i);
-		}
-		return ans;
-	}
-}
-
-public List<Integer> countSmaller(int[] nums) {
-	List<Integer> counts = new LinkedList<Integer>();
-
-	if (nums == null || nums.length == 0)
-		return counts;
-
-	int[] orderedNums = nums.clone();
-	Arrays.sort(orderedNums);
-	int[] nums2 = IntStream.of(nums)
-			.map(x -> Arrays.binarySearch(orderedNums, x) + 1).toArray();
-
-	BIT bit = new BIT(nums2.length);
-	for (int i = nums2.length - 1; i >= 0; i--) {
-		counts.add(0, bit.sum(nums2[i]));
-		bit.update(nums2[i] + 1);
-	}
-
-	return counts;
-}
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> res = new LinkedList<Integer>();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        // find min value and minus min by each elements, plus 1 to avoid 0 element
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            min = (nums[i] < min) ? nums[i]:min;
+        }
+        int[] nums2 = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            nums2[i] = nums[i] - min + 1;
+            max = Math.max(nums2[i],max);
+        }
+        int[] tree = new int[max+1];
+        for (int i = nums2.length-1; i >= 0; i--) {
+            res.add(0,get(nums2[i]-1,tree));
+            update(nums2[i],tree);
+        }
+        return res;
+    }
+    private int get(int i, int[] tree) {
+        int num = 0;
+        while (i > 0) {
+            num +=tree[i];
+            i -= i&(-i);
+        }
+        return num;
+    }
+    private void update(int i, int[] tree) {
+        while (i < tree.length) {
+            tree[i] ++;
+            i += i & (-i);
+        }
+    }
 }
