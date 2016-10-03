@@ -7,10 +7,18 @@ public class NumMatrix {
             return;
         }
         BIT2D = new int[matrix.length + 1][matrix[0].length + 1];
-        this.matrix = new int[matrix.length][matrix[0].length];
+        this.matrix = matrix;
         for(int i = 0; i < matrix.length; i++) {
             for(int j = 0; j < matrix[0].length; j++) {
-                update(i, j, matrix[i][j]);
+                init(i, j, matrix[i][j]);
+            }
+        }
+    }
+    
+    public void init(int row, int col, int val) {
+        for(int i = row + 1; i < BIT2D.length; i += i & (-i)) {         //also equals to i |= i + 1
+            for(int j = col + 1; j < BIT2D[0].length; j += j & (-j)) {
+                BIT2D[i][j] += val;
             }
         }
     }
@@ -18,11 +26,7 @@ public class NumMatrix {
     public void update(int row, int col, int val) {
         int delta = val - matrix[row][col];
         matrix[row][col] = val;
-        for(int i = row + 1; i < BIT2D.length; i += i & (-i)) {         //also equals to i |= i + 1
-            for(int j = col + 1; j < BIT2D[0].length; j += j & (-j)) {
-                BIT2D[i][j] += delta;
-            }
-        }
+        init(row, col, delta);
     }
     
 
