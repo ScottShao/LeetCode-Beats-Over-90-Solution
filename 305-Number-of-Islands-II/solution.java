@@ -1,11 +1,9 @@
 public class Solution {
     class UnionFind {
         int[] parent;
-        int[] rank;
         int count;
         public UnionFind(int len) {
             parent = new int[len];
-            rank = new int[len];
             for (int i = 0; i < len; i++) {
                 parent[i] = i;
             }
@@ -16,14 +14,7 @@ public class Solution {
             int p1 = find(p);
             int p2 = find(q);
             if (p1 == p2) return;
-            if (rank[p1] > rank[p2]) {
-                parent[p2] = p1;
-            } else if (rank[p1] < rank[p2]){
-                parent[p1] = p2;
-            } else {
-                rank[p1]++;
-                parent[p2] = p1;
-            }
+            parent[p1] = p2;
             count--;
         }
         
