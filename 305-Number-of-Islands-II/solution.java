@@ -1,56 +1,40 @@
 public class Solution {
-    class UnionFind {
-        int[] parent;
-        int count;
-        public UnionFind(int len) {
-            parent = new int[len];
-            for (int i = 0; i < len; i++) {
-                parent[i] = i;
+    int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+
+public List<Integer> numIslands2(int m, int n, int[][] positions) {
+    List<Integer> result = new ArrayList<>();
+    if(m <= 0 || n <= 0) return result;
+
+    int count = 0;                      // number of islands
+    int[] roots = new int[m * n];       // one island = one tree
+    Arrays.fill(roots, -1);            
+
+    for(int[] p : positions) {
+        int root = n * p[0] + p[1];     // assume new point is isolated island
+        roots[root] = root;             // add new island
+        count++;
+
+        for(int[] dir : dirs) {
+            int x = p[0] + dir[0]; 
+            int y = p[1] + dir[1];
+            int nb = n * x + y;
+            if(x < 0 || x >= m || y < 0 || y >= n || roots[nb] == -1) continue;
+            
+            int rootNb = findIsland(roots, nb);
+            if(root != rootNb) {        // if neighbor is in another island
+                roots[root] = rootNb;   // union two islands 
+                root = rootNb;          // current tree root = joined tree root
+                count--;               
             }
-            count = 0;
         }
-        
-        public void union(int p, int q) {
-            int p1 = find(p);
-            int p2 = find(q);
-            if (p1 == p2) return;
-            parent[p1] = p2;
-            count--;
-        }
-        
-        public int find(int p) {
-            int q = parent[p];
-            while (q != parent[q]) {
-                parent[p] = parent[q];
-                q = parent[q];
-            }
-            return q;
-        }
+
+        result.add(count);
     }
-    
-    public List<Integer> numIslands2(int m, int n, int[][] positions) {
-        UnionFind uf = new UnionFind(m * n);
-        Set<Integer> used = new HashSet<>();
-        List<Integer> res = new ArrayList<>();
-        int count = 0;
-        for (int[] p : positions) {
-            int idx = p[0] * n + p[1];
-            uf.count++;
-            if (p[0] > 0 && used.contains(idx - n)) {
-                uf.union(idx, idx - n);
-            }
-            if (p[0] < m - 1 && used.contains(idx + n)) {
-                uf.union(idx, idx + n);
-            }
-            if (p[1] > 0 && used.contains(idx - 1)) {
-                uf.union(idx, idx - 1);
-            }
-            if (p[1] < n - 1 && used.contains(idx + 1)) {
-                uf.union(idx, idx + 1);
-            }
-            res.add(uf.count);
-            used.add(idx);
-        }
-        return res;
-    }
+    return result;
+}
+
+public int findIsland(int[] roots, int id) {
+    while(id != roots[id]) id = roots[id];
+    return id;
+}
 }
