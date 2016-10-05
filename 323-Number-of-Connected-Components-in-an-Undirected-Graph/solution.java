@@ -1,6 +1,6 @@
 public class Solution {
     public int countComponents(int n, int[][] edges) {
-        if (n < 1 || edges == null || edges.length == 0 || edges[0].length == 0) return n;
+        if (edges == null || edges.length == 0 || edges[0].length == 0) return n;
         int[] parent = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
