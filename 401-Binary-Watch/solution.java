@@ -3,8 +3,7 @@ public class Solution {
     public List<String> readBinaryWatch(int num) {
         List<String> res = new ArrayList<>();
         if (num < 0) return res;
-        int bound = Math.min(num, 4);
-        for (int i = 0; i <= bound; i++) {
+        for (int i = 0; i <= num; i++) {
             List<Integer> hours = new ArrayList<>();
             List<Integer> mins = new ArrayList<>();
             dfs(0, i, 4, 12, 0, hours);
