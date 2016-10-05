@@ -1,16 +1,18 @@
 public class Solution {
     private int len;
+    private int[] wLen;
     public int maxProduct(String[] words) {
         if (words == null) return 0;
         len = words.length;
         if (len == 0) return 0;
+        wLen = new int[len];
         words = bucketSort(words);
         int[] bits = stringToInt(words);
         int max = 0;
         for (int i = len - 1; i > 0; i--) {
             for (int j = i - 1; j >= 0; j--) {
                 if ((bits[i] & bits[j]) == 0) {
-                    max = Math.max(words[i].length() * words[j].length(), max);
+                    max = Math.max(wLen[i] * wLen[j], max);
                     break;
                 }
             }
@@ -22,7 +24,8 @@ public class Solution {
         int[] bits = new int[len];
         for (int i = 0; i < len; i++) {
             char[] vals = words[i].toCharArray();
-            for (int j = 0; j < vals.length; j++) {
+            wLen[i] = vals.length;
+            for (int j = 0; j < wLen[i]; j++) {
                 int idx = vals[j] - 'a' + 1;
                 bits[i] = bits[i] | (1 << idx);
             }
