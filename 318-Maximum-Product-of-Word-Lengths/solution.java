@@ -1,7 +1,8 @@
 public class Solution {
+    private int len;
     public int maxProduct(String[] words) {
         if (words == null) return 0;
-        int len = words.length;
+        len = words.length;
         if (len == 0) return 0;
         words = bucketSort(words);
         int[] bits = stringToInt(words);
@@ -18,7 +19,6 @@ public class Solution {
     }
     
     private int[] stringToInt(String[] words) {
-        int len = words.length;
         int[] bits = new int[len];
         for (int i = 0; i < len; i++) {
             char[] vals = words[i].toCharArray();
@@ -42,7 +42,7 @@ public class Solution {
         for (int i = 1; i <= max; i++) {
             count[i] += count[i - 1];
         }
-        String[] re = new String[words.length];
+        String[] re = new String[len];
         for (String w : words) {
             int len = w.length();
             count[len]--;
