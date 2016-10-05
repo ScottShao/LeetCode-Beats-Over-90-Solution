@@ -20,8 +20,7 @@ public class Solution {
     private void dfs(int idx, int num, int bitsIdxBound, int valBound, int crt, List<Integer> res) {
         if (num == 0) res.add(crt);
         else {
-            int next = crt + BITS[idx];
-            if (next < valBound) dfs(idx + 1, num - 1, bitsIdxBound, valBound, next, res);
+            if (crt + BITS[idx] < valBound) dfs(idx + 1, num - 1, bitsIdxBound, valBound, crt + BITS[idx], res);
             if (idx + num < bitsIdxBound) dfs(idx + 1, num, bitsIdxBound, valBound, crt, res);
         }
     }
