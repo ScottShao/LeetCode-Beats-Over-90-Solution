@@ -3,12 +3,14 @@ public class Solution {
         if (words == null) return 0;
         int len = words.length;
         if (len == 0) return 0;
+        words = bucketSort(words);
         int[] bits = stringToInt(words);
         int max = 0;
         for (int i = len - 1; i > 0; i--) {
             for (int j = i - 1; j >= 0; j--) {
                 if ((bits[i] & bits[j]) == 0) {
                     max = Math.max(words[i].length() * words[j].length(), max);
+                    break;
                 }
             }
         }
@@ -26,5 +28,26 @@ public class Solution {
             }
         }
         return bits;
+    }
+    
+    private String[] bucketSort(String[] words) {
+        int max = 0;
+        for (String w : words) {
+            max = Math.max(w.length(), max);
+        }
+        int[] count = new int[max + 1];
+        for (String w : words) {
+            count[w.length()]++;
+        }
+        for (int i = 1; i <= max; i++) {
+            count[i] += count[i - 1];
+        }
+        String[] re = new String[words.length];
+        for (String w : words) {
+            int len = w.length();
+            count[len]--;
+            re[count[len]] = w;
+        }
+        return re;
     }
 }
