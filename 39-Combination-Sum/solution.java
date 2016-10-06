@@ -14,9 +14,11 @@ public class Solution {
             res.add(new ArrayList<>(comb));
         } else {
             if (idx < candidates.length - 1 && candidates[idx] < target) dfs(candidates, idx + 1, target, comb, res);
-            comb.add(candidates[idx]);
-            if (candidates[idx] <= target) dfs(candidates, idx, target - candidates[idx], comb, res);
-            comb.remove(comb.size() - 1);
+            if (candidates[idx] <= target) {
+                comb.add(candidates[idx]);
+                dfs(candidates, idx, target - candidates[idx], comb, res);
+                comb.remove(comb.size() - 1);
+            }
         }
     }
 }
