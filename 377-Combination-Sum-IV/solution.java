@@ -1,6 +1,5 @@
 public class Solution {
     public int combinationSum4(int[] nums, int target) {
-        if (nums == null || target < 1) return 0;
         int len = nums.length;
         Arrays.sort(nums);
         if (len == 0) return 0;
