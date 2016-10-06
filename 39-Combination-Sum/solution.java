@@ -13,7 +13,7 @@ public class Solution {
         if (0 == target) {
             res.add(new ArrayList<>(comb));
         } else {
-            if (idx < candidates.length - 1 && candidates[idx] < target) dfs(candidates, idx + 1, target, comb, res);
+            if (idx < candidates.length - 1) dfs(candidates, idx + 1, target, comb, res);
             if (candidates[idx] <= target) {
                 comb.add(candidates[idx]);
                 dfs(candidates, idx, target - candidates[idx], comb, res);
