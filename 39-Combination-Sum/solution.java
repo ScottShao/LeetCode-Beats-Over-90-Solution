@@ -1,23 +1,29 @@
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (candidates == null) return res;
-        int len = candidates.length;
-        if (len == 0) return res;
         Arrays.sort(candidates);
-        dfs(candidates, 0, target, new ArrayList<>(), res);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(candidates.length == 0){
+            return res;
+        }
+        compute(candidates, target, 0, 0, new ArrayList<Integer>(), res);
         return res;
     }
     
-    private void dfs(int[] candidates, int idx, int target, List<Integer> comb, List<List<Integer>> res) {
-        if (0 == target) {
-            res.add(new ArrayList<>(comb));
-        } else {
-            int size = comb.size();
-            for (int i = idx, len = candidates.length; i < len && candidates[i] <= target; i++) {
-                comb.add(candidates[i]);
-                dfs(candidates, i, target - candidates[i], comb, res);
-                comb.remove(size);
+    public void compute(int[] candidates, int target, int sum, int start, List<Integer> list, List<List<Integer>> res){
+        if(sum == target){
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }else if(sum > target){
+            return;
+        }else{
+            for(int index = start; index < candidates.length; index++){
+                if(sum + candidates[index] <= target){
+                    list.add(candidates[index]);
+                    sum = sum + candidates[index];
+                    compute(candidates, target, sum, index, list, res);
+                    list.remove(list.size() - 1);
+                    sum = sum - candidates[index];
+                }
             }
         }
     }
