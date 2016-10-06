@@ -5,8 +5,7 @@ public class Solution {
         if (digits == null) return res;
         int len = digits.length();
         if (len == 0) return res;
-        char[] chs = digits.toCharArray();
-        dfs(chs, 0, new StringBuilder(), res);
+        dfs(digits.toCharArray(), 0, new StringBuilder(), res);
         return res;
     }
     
