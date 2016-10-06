@@ -1,15 +1,14 @@
 public class Solution {
     public int combinationSum4(int[] nums, int target) {
-        int len = nums.length;
-        Arrays.sort(nums);
-        if (len == 0) return 0;
-        int[] dp = new int[target + 1];
-        dp[0] = 1;
-        for (int i = 1; i <= target; i++) {
-            for (int j = 0; j < len && nums[j] <= i; j++) {
-                dp[i] += dp[i - nums[j]];
+        int[] comb = new int[target + 1];
+        comb[0] = 1;
+        for (int i = 1; i < comb.length; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i - nums[j] >= 0) {
+                    comb[i] += comb[i - nums[j]];
+                }
             }
         }
-        return dp[target];
+        return comb[target];
     }
 }
