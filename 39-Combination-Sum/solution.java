@@ -4,6 +4,7 @@ public class Solution {
         if (candidates == null) return res;
         int len = candidates.length;
         if (len == 0) return res;
+        Arrays.sort(candidates);
         dfs(candidates, 0, 0, target, new ArrayList<>(), res);
         return res;
     }
@@ -12,7 +13,7 @@ public class Solution {
         if (crt == target) {
             res.add(new ArrayList<>(comb));
         } else {
-            if (idx < candidates.length - 1) dfs(candidates, idx + 1, crt, target, comb, res);
+            if (idx < candidates.length - 1 && candidates[idx] + crt < target) dfs(candidates, idx + 1, crt, target, comb, res);
             comb.add(candidates[idx]);
             if (crt + candidates[idx] <= target) dfs(candidates, idx, crt + candidates[idx], target, comb, res);
             comb.remove(comb.size() - 1);
