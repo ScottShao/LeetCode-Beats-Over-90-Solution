@@ -4,6 +4,7 @@ public class Solution {
     public int combinationSum4(int[] nums, int target) {
         dp = new int[target + 1];
         Arrays.fill(dp, -1);
+        Arrays.sort(nums);
         dp[0] = 1;
         return helper(nums, target);
     }
@@ -16,6 +17,8 @@ public class Solution {
         for (int i = 0; i < nums.length; i++) {
             if (target >= nums[i]) {
                 res += helper(nums, target - nums[i]);
+            } else {
+                break;
             }
         }
         dp[target] = res;
