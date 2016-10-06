@@ -13,11 +13,11 @@ public class Solution {
         if (0 == target) {
             res.add(new ArrayList<>(comb));
         } else {
-            if (idx < candidates.length - 1) dfs(candidates, idx + 1, target, comb, res);
-            if (candidates[idx] <= target) {
-                comb.add(candidates[idx]);
-                dfs(candidates, idx, target - candidates[idx], comb, res);
-                comb.remove(comb.size() - 1);
+            int size = comb.size();
+            for (int i = idx, len = candidates.length; i < len && candidates[i] <= target; i++) {
+                comb.add(candidates[i]);
+                dfs(candidates, i, target - candidates[i], comb, res);
+                comb.remove(size);
             }
         }
     }
